@@ -181,6 +181,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 Question(
                   questionText: "Quel est la capital du Mali?",
                   options: ["Bamako", "Togo", "Kidal", "Sikasso"],
+                  imageUrl: "assets/logo/logonoir.png",
                   correctAnswer: "Bamako",
                 ),
                 Question(

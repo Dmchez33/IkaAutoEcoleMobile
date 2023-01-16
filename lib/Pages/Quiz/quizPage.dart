@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'Question.dart';
@@ -40,7 +41,7 @@ class _QuizPageState extends State<QuizPage> {
     final question = widget.questions[_currentQuestionIndex];
 
     return Scaffold(
-      body: Center(
+      body: Container(
         child: Column(
           children: <Widget>[
             Card(
@@ -48,13 +49,26 @@ class _QuizPageState extends State<QuizPage> {
               color: Colors.white10,
               child: Column(
                 children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.all(10),
+                      child: const Align(
+                          alignment: AlignmentDirectional.topStart,
+                          child: Text("Examens Blanc",style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),)
+                      )),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: Align(
+                        alignment: AlignmentDirectional.topStart,
+                        child: Text("Question ${_currentQuestionIndex+1}/${widget.questions.length}",style: TextStyle(fontSize: 20),)
+                    )),
+
+                  if (question.imageUrl != null)
+                    Image.asset("assets/logo/logonoir.png"),
                   Text(
                     question.questionText,
                     style:
-                        const TextStyle(fontFamily: "Montserrat", fontSize: 20),
+                    const TextStyle(fontFamily: "Montserrat", fontSize: 20),
                   ),
-                  if (question.imageUrl != null)
-                    Image.asset("assets/logo/logonoir.png"),
                 ],
               ),
             ),
@@ -82,9 +96,13 @@ class _QuizPageState extends State<QuizPage> {
                 child: Row(
                   children: [
                     if (_currentQuestionIndex < widget.questions.length - 1)
-                      ElevatedButton(
-                        child: const Text("Suivant"),
-                        onPressed: _nextQuestion,
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        child: FloatingActionButton(
+                          backgroundColor: Color(0xFF1A237E),
+                          child: Icon(Icons.check),
+                          onPressed: _nextQuestion,
+                        ),
                       ),
                     if (_currentQuestionIndex == widget.questions.length - 1)
                       ElevatedButton(
@@ -133,6 +151,7 @@ class _QuizPageState extends State<QuizPage> {
           ],
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
     );
   }
 }
