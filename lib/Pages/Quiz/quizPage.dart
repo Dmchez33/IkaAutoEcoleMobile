@@ -79,19 +79,17 @@ class _QuizPageState extends State<QuizPage> {
             Visibility(
                 visible:
                     isNextButtonVisible, // Affiche le bouton suivant uniquement si isNextButtonVisible est true.,
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  //
-                  child: FloatingActionButton(
-                      child: Icon(icon),
-                      onPressed: () {
-                        if (_currentQuestionIndex <
-                            widget.questions.length - 1) {
-                          _nextQuestion;
-                        }
-
-                        if (_currentQuestionIndex ==
-                            widget.questions.length - 1) {
+                child: Row(
+                  children: [
+                    if (_currentQuestionIndex < widget.questions.length - 1)
+                      ElevatedButton(
+                        child: const Text("Suivant"),
+                        onPressed: _nextQuestion,
+                      ),
+                    if (_currentQuestionIndex == widget.questions.length - 1)
+                      ElevatedButton(
+                        child: const Text("Soumettre"),
+                        onPressed: () {
                           final answers = _answers.values.toList();
                           // check answers and navigate to result page
                           int correctAnswers = 0;
@@ -102,6 +100,7 @@ class _QuizPageState extends State<QuizPage> {
                               correctAnswers++;
                             }
                           }
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -127,19 +126,13 @@ class _QuizPageState extends State<QuizPage> {
                                       ],
                                     )),
                           );
-                        }
-                      }),
-
-                  // ElevatedButton(
-                  //   onPressed: _nextQuestion,
-                  //   child: const Text("Suivant"),
-                  // ),
+                        },
+                      ),
+                  ],
                 ))
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
- 
