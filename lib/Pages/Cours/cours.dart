@@ -11,12 +11,12 @@ class _coursState extends State<cours> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF6200EE),
-        centerTitle: true,
-        title: const Text('Cours'),
-        actions: [Image.asset('assets/images/logoIkaAutoEcole.png')],
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Color(0xFF6200EE),
+      //   centerTitle: true,
+      //   title: const Text('Cours'),
+      //   actions: [Image.asset('assets/images/logoIkaAutoEcole.png')],
+      // ),
       body: Center(
           child: GridView.count(
         primary: false,

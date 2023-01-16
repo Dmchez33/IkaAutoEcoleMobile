@@ -39,12 +39,12 @@ class _listeLieuxState extends State<listeLieux> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF1A237E),
-        centerTitle: true,
-        title: const Text('Localisation'),
-        actions: [Image.asset('assets/images/logoIkaAutoEcole.png')],
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Color(0xFF1A237E),
+      //   centerTitle: true,
+      //   title: const Text('Localisation'),
+      //   actions: [Image.asset('assets/images/logoIkaAutoEcole.png')],
+      // ),
       body: ListView.builder(
         itemCount: _listeLieux.length,
         itemBuilder: (BuildContext context, int index) {

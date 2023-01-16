@@ -65,167 +65,171 @@ class _localisationState extends State<localisation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF1A237E),
-        centerTitle: true,
-        title: const Text('Localisation'),
-        actions: [Image.asset('assets/images/logoIkaAutoEcole.png')],
-      ),
-      body: Column(
-        children: [
-          const Padding(padding: EdgeInsets.only(top: 20)),
-          const Text("Trouver le meilleur auto école près de chez toi"),
-          Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Image.asset('assets/images/car-driving.gif')),
-          Container(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  const SizedBox(height: 30),
-                  DropdownButtonFormField2(
-                    decoration: InputDecoration(
-                      //Add isDense true and zero Padding.
-                      //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                      isDense: true,
-
-                      contentPadding: EdgeInsets.zero,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      //Add more decoration as you want here
-                      //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                    ),
-                    isExpanded: true,
-                    hint: Text(
-                      'Select Item',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                    items: _addDividersAfterItems(items),
-                    customItemsHeights: _getCustomItemsHeights(),
-                    value: selectedValue,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedValue = value as String;
-                      });
-                    },
-                    buttonHeight: 40,
-                    dropdownMaxHeight: 200,
-                    buttonWidth: 240,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  ),
-                  const SizedBox(height: 30),
-                  DropdownButtonFormField2(
-                    decoration: InputDecoration(
-                      //Add isDense true and zero Padding.
-                      //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                      isDense: true,
-
-                      contentPadding: EdgeInsets.zero,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      //Add more decoration as you want here
-                      //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                    ),
-                    isExpanded: true,
-                    hint: Text(
-                      'Select Item',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                    items: _addDividersAfterItems(items),
-                    customItemsHeights: _getCustomItemsHeights(),
-                    value: selectedValue,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedValue = value as String;
-                      });
-                    },
-                    buttonHeight: 40,
-                    dropdownMaxHeight: 200,
-                    buttonWidth: 240,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  ),
-                  const SizedBox(height: 30),
-                  DropdownButtonFormField2(
-                    decoration: InputDecoration(
-                      //Add isDense true and zero Padding.
-                      //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                      isDense: true,
-
-                      contentPadding: EdgeInsets.zero,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      //Add more decoration as you want here
-                      //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                    ),
-                    isExpanded: true,
-                    hint: Text(
-                      'Select Item',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                    items: _addDividersAfterItems(items),
-                    customItemsHeights: _getCustomItemsHeights(),
-                    value: selectedValue,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedValue = value as String;
-                      });
-                    },
-                    buttonHeight: 40,
-                    dropdownMaxHeight: 200,
-                    buttonWidth: 240,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  ),
-
-
-                  Row(children: [
-
-                    Expanded(
-
-                      child: ElevatedButton(
-
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Color(0xFF6200EE)),
-                          foregroundColor:
-                              MaterialStateProperty.all(Color(0xFFFFFFFF)),
-                          elevation: MaterialStateProperty.all(4),
-
-                          //mouseCursor: MaterialStateProperty.all(MouseCursor())
+      // appBar: AppBar(
+      //   backgroundColor: Color(0xFF1A237E),
+      //   centerTitle: true,
+      //   title: const Text('Localisation'),
+      //   actions: [Image.asset('assets/images/logoIkaAutoEcole.png')],
+      // ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Padding(padding: EdgeInsets.only(top: 20)),
+            const Text("Trouver le meilleur auto école près de chez toi"),
+            Container(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Image.asset('assets/images/car-driving.gif')),
+            Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 30),
+                    DropdownButtonFormField2(
+                      decoration: InputDecoration(
+                        //Add isDense true and zero Padding.
+                        //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                        isDense: true,
+      
+                        contentPadding: EdgeInsets.zero,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(0),
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const listeLieux()),
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              'TextButton',
-                            ),
-                            //Icon(Icons.book)
-                          ],
+                        //Add more decoration as you want here
+                        //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+                      ),
+                      isExpanded: true,
+                      hint: Text(
+                        'Select Item',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).hintColor,
                         ),
                       ),
-                    )
-                  ])
-                ],
-              ))
-        ],
+                      items: _addDividersAfterItems(items),
+                      customItemsHeights: _getCustomItemsHeights(),
+                      value: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value as String;
+                        });
+                      },
+                      buttonHeight: 40,
+                      dropdownMaxHeight: 200,
+                      buttonWidth: 240,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    ),
+                    const SizedBox(height: 30),
+                    DropdownButtonFormField2(
+                      decoration: InputDecoration(
+                        //Add isDense true and zero Padding.
+                        //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                        isDense: true,
+      
+                        contentPadding: EdgeInsets.zero,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(0),
+                        ),
+                        //Add more decoration as you want here
+                        //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+                      ),
+                      isExpanded: true,
+                      hint: Text(
+                        'Select Item',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).hintColor,
+                        ),
+                      ),
+                      items: _addDividersAfterItems(items),
+                      customItemsHeights: _getCustomItemsHeights(),
+                      value: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value as String;
+                        });
+                      },
+                      buttonHeight: 40,
+                      dropdownMaxHeight: 200,
+                      buttonWidth: 240,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    ),
+                    const SizedBox(height: 30),
+                    DropdownButtonFormField2(
+                      decoration: InputDecoration(
+                        //Add isDense true and zero Padding.
+                        //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                        isDense: true,
+      
+                        contentPadding: EdgeInsets.zero,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(0),
+                        ),
+                        //Add more decoration as you want here
+                        //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+                      ),
+                      isExpanded: true,
+                      hint: Text(
+                        'Select Item',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).hintColor,
+                        ),
+                      ),
+                      items: _addDividersAfterItems(items),
+                      customItemsHeights: _getCustomItemsHeights(),
+                      value: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value as String;
+                        });
+                      },
+                      buttonHeight: 40,
+                      dropdownMaxHeight: 200,
+                      buttonWidth: 240,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    ),
+      
+      
+                    Row(children: [
+      
+                      Expanded(
+      
+                        child: ElevatedButton(
+      
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Color(0xFF6200EE)),
+                            foregroundColor:
+                                MaterialStateProperty.all(Color(0xFFFFFFFF)),
+                            elevation: MaterialStateProperty.all(4),
+      
+                            //mouseCursor: MaterialStateProperty.all(MouseCursor())
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const listeLieux(),
+                                  settings: const RouteSettings(name: '/listelieux')
+                                  ),
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                'TextButton',
+                              ),
+                              //Icon(Icons.book)
+                            ],
+                          ),
+                        ),
+                      )
+                    ])
+                  ],
+                ))
+          ],
+        ),
       ),
     );
   }

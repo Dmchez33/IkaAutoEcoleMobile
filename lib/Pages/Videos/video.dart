@@ -12,7 +12,7 @@ class _videoState extends State<video> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Quiz'),
+        child: Text('Video'),
       ),
     );
   }
