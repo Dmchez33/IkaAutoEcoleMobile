@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_button/flutter_animated_button.dart';
 
+import '../Statistique/statistique.dart';
 import 'Question.dart';
 import 'ResultatPage.dart';
+import 'SeletedQuestionPage.dart';
 
 class QuizPage extends StatefulWidget {
   final List<Question> questions;
@@ -74,22 +77,46 @@ class _QuizPageState extends State<QuizPage> {
             ),
             Expanded(
                 child: Wrap(
-              spacing: 8.0, // horizontal space between children
-              runSpacing: 4.0, // vertical space between rows
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: question.options.map((option) {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width / 2 - 12,
-                  child: CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    value: _answers[_currentQuestionIndex] == option,
-                    onChanged: (checked) =>
-                        _submitAnswer(_currentQuestionIndex, option),
-                    title: Text(option),
-                  ),
-                );
-              }).toList(),
-            )),
+                  spacing: 8.0, // horizontal space between children
+                  runSpacing: 4.0, // vertical space between rows
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: question.options.map((option) {
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width ,
+                      child:  AnimatedContainer(
+                          duration: Duration(milliseconds: 200),
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: _answers[_currentQuestionIndex] == option
+                                ? Colors.lightBlue
+                                : Colors.white,
+                            //borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: _answers[_currentQuestionIndex] == option
+                                    ? Colors.lightBlue
+                                    : Colors.black26),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () =>
+                                  _submitAnswer(_currentQuestionIndex, option),
+                              child: Center(
+                                child: Text(
+                                  option,
+                                  style: TextStyle(
+                                      color: _answers[_currentQuestionIndex] == option
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                              ),
+                            ),
+                          )),
+                    );
+                  }).toList(),
+                )),
+
             Visibility(
                 visible:
                     isNextButtonVisible, // Affiche le bouton suivant uniquement si isNextButtonVisible est true.,
@@ -138,7 +165,11 @@ class _QuizPageState extends State<QuizPage> {
                                         ElevatedButton(
                                           child: const Text("OK"),
                                           onPressed: () {
-                                            Navigator.of(context).pop();
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => statistique()),
+                                            );
                                           },
                                         ),
                                       ],

@@ -1,7 +1,10 @@
+import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:ika_auto_ecole/Pages/map/listeLieux.dart';
+import 'package:select_searchable_list/select_searchable_list.dart';
 
 class localisation extends StatefulWidget {
   const localisation({Key? key}) : super(key: key);
@@ -62,172 +65,175 @@ class _localisationState extends State<localisation> {
     return _itemsHeights;
   }
 
+  final Map<int, String> _listCategories = {
+    1: 'Boot',
+    2: 'Casual',
+    3: 'Flat',
+    4: 'Flip',
+    5: 'Lace up',
+    6: 'Loafer',
+    7: 'Slip-on',
+    8: 'Moccasins'
+  };
+
+  // Default value
+  final List<int> _selectedCategory = [1];
+
+  final Map<int, String> _listColors = {
+    1: 'Black',
+    2: 'Blue',
+    3: 'Brown',
+    4: 'Gold',
+    5: 'Green',
+    6: 'Grey',
+    7: 'Orange',
+    8: 'Pink',
+    9: 'Purple',
+    10: 'Red'
+  };
+
+  // Default value
+  final List<int> _selectedColors = [2, 4];
+  final TextEditingController _categoryTextEditingController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Color(0xFF1A237E),
-      //   centerTitle: true,
-      //   title: const Text('Localisation'),
-      //   actions: [Image.asset('assets/images/logoIkaAutoEcole.png')],
-      // ),
-      body: SingleChildScrollView(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF1A237E),
+        centerTitle: true,
+        title: const Text('Localisation'),
+        actions: [Image.asset('assets/images/logoIkaAutoEcole.png')],
+      ),
+      body:
+          Container(
+        color: Colors.white,
         child: Column(
           children: [
-            const Padding(padding: EdgeInsets.only(top: 20)),
-            const Text("Trouver le meilleur auto école près de chez toi"),
             Container(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Image.asset('assets/images/car-driving.gif')),
-            Container(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 30),
-                    DropdownButtonFormField2(
-                      decoration: InputDecoration(
-                        //Add isDense true and zero Padding.
-                        //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                        isDense: true,
-      
-                        contentPadding: EdgeInsets.zero,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                        //Add more decoration as you want here
-                        //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                      ),
-                      isExpanded: true,
-                      hint: Text(
-                        'Select Item',
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.25,
+              child: Image.asset(
+                'assets/images/localisation.png',
+                fit: BoxFit.fill,
+              ),
+            ),
+            Expanded(
+                child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Card(
+                    elevation: 0,
+                    child: ListTile(
+                      leading: Image.asset('assets/images/localisateur.png',
+                          width: 100, height: 100, fit: BoxFit.fill),
+                      title: const Text(
+                        'Ne perdez plus de temps à chercher une auto-école près de chez vous !',
                         style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).hintColor,
+                          letterSpacing: 1,
+                          wordSpacing: 2,
+                          fontFamily: 'Poppins',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
+                        textAlign: TextAlign.justify,
                       ),
-                      items: _addDividersAfterItems(items),
-                      customItemsHeights: _getCustomItemsHeights(),
-                      value: selectedValue,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedValue = value as String;
-                        });
-                      },
-                      buttonHeight: 40,
-                      dropdownMaxHeight: 200,
-                      buttonWidth: 240,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 8.0),
                     ),
-                    const SizedBox(height: 30),
-                    DropdownButtonFormField2(
-                      decoration: InputDecoration(
-                        //Add isDense true and zero Padding.
-                        //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                        isDense: true,
-      
-                        contentPadding: EdgeInsets.zero,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                        //Add more decoration as you want here
-                        //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                      ),
-                      isExpanded: true,
-                      hint: Text(
-                        'Select Item',
+                  ),
+                  const Card(
+                    elevation: 0,
+                    child: ListTile(
+                      title: Text(
+                        'Avec notre page de localisation sur IKAAUTOECOLE '
+                        'vous pouvez facilement trouver les auto-écoles les plus '
+                        'proches de votre adresse.',
                         style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).hintColor,
+                          letterSpacing: 1,
+                          wordSpacing: 2,
+                          fontFamily: 'Poppins',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
+                        textAlign: TextAlign.justify,
                       ),
-                      items: _addDividersAfterItems(items),
-                      customItemsHeights: _getCustomItemsHeights(),
-                      value: selectedValue,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedValue = value as String;
-                        });
-                      },
-                      buttonHeight: 40,
-                      dropdownMaxHeight: 200,
-                      buttonWidth: 240,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 8.0),
                     ),
-                    const SizedBox(height: 30),
-                    DropdownButtonFormField2(
-                      decoration: InputDecoration(
-                        //Add isDense true and zero Padding.
-                        //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                        isDense: true,
-      
-                        contentPadding: EdgeInsets.zero,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                        //Add more decoration as you want here
-                        //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                      ),
-                      isExpanded: true,
-                      hint: Text(
-                        'Select Item',
+                  ),
+                  Card(
+                    elevation: 0,
+                    child: Image.asset('assets/images/Image.png',
+                        fit: BoxFit.cover),
+                  ),
+                  const Card(
+                    elevation: 0,
+                    child: ListTile(
+                      title: Text(
+                        "Cliquez pour trouver l'auto-école près de chez vous et réservez vos cours dès maintenant !",
                         style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).hintColor,
+                          letterSpacing: 1,
+                          wordSpacing: 2,
+                          fontFamily: 'Poppins',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
+                        textAlign: TextAlign.justify,
                       ),
-                      items: _addDividersAfterItems(items),
-                      customItemsHeights: _getCustomItemsHeights(),
-                      value: selectedValue,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedValue = value as String;
-                        });
-                      },
-                      buttonHeight: 40,
-                      dropdownMaxHeight: 200,
-                      buttonWidth: 240,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 8.0),
                     ),
-      
-      
-                    Row(children: [
-      
-                      Expanded(
-      
-                        child: ElevatedButton(
-      
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Color(0xFF6200EE)),
-                            foregroundColor:
-                                MaterialStateProperty.all(Color(0xFFFFFFFF)),
-                            elevation: MaterialStateProperty.all(4),
-      
-                            //mouseCursor: MaterialStateProperty.all(MouseCursor())
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const listeLieux(),
-                                  settings: const RouteSettings(name: '/listelieux')
-                                  ),
-                            );
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                'TextButton',
-                              ),
-                              //Icon(Icons.book)
-                            ],
-                          ),
+                  ),
+
+                  /*Card(
+                        elevation: 0,
+                        child: ListTile(
+                          leading: Image.asset('assets/images/cours.png',width: 100,height: 100,fit: BoxFit.fill),
+                          title: const Text(
+                              'Faites un pas vers votre permis de conduire '
+                                  'en utilisant notre plateforme efficace et pratique.',style: TextStyle(letterSpacing: 1, wordSpacing: 2,fontFamily: 'Poppins',fontSize: 16, fontWeight: FontWeight.w600,),textAlign: TextAlign.justify,),
                         ),
-                      )
-                    ])
-                  ],
-                ))
+                      ),*/
+                  Container(
+                    margin: EdgeInsets.only(right: 20, bottom: 20),
+                    child: Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: AnimatedButton(
+                        onPress: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const listeLieux(),
+                                settings:
+                                    const RouteSettings(name: '/listelieux')),
+                          );
+                        },
+                        height: 40,
+                        width: 100,
+                        text: '>>',
+                        selectedGradientColor: const LinearGradient(
+                            colors: [Color(0xFF1A237E), Color(0xFF1A237E)]),
+                        isReverse: true,
+                        selectedTextColor: Colors.white,
+                        transitionType: TransitionType.LEFT_CENTER_ROUNDER,
+                        textStyle: TextStyle(color: Colors.black),
+                        borderColor: Colors.black,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                      ),
+                    ),
+                  ),
+                  Card(
+                    child: DropDownTextField(
+                      textEditingController: _categoryTextEditingController,
+                      title: 'Category',
+                      hint: 'Select Category',
+                      options: _listCategories,
+                      selectedOptions: _selectedCategory,
+                      onChanged: (selectedIds) {
+                        // setState(() => selectedIds);
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ))
           ],
         ),
       ),

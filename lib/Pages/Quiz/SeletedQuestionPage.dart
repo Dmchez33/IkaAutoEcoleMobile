@@ -20,7 +20,7 @@ class QuizSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Sélection de quiz")),
+      //appBar: AppBar(title: Text("Sélection de quiz")),
       body: Center(
         child: GridView.count(
           primary: false,
