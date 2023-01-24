@@ -1,5 +1,4 @@
 
-
 import 'package:flutter/material.dart';
 
 import 'Pages/HomePage.dart';
@@ -25,7 +24,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 /*
 //AFFICHER D'UNE PREMIER PAGE LORS DE LANCEMENT DE L'APPLICATION

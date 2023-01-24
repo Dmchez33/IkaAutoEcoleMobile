@@ -11,9 +11,6 @@ import 'package:ika_auto_ecole/Pages/map/map.dart';
 import '/Pages/Cours/coursePage.dart';
 import '/Pages/Quiz/Question.dart';
 import '/Pages/Quiz/SeletedQuestionPage.dart';
-import 'package:custom_bottom_navigation_bar/custom_bottom_navigation_bar.dart';
-
-import 'package:custom_bottom_navigation_bar/custom_bottom_navigation_bar_item.dart';
 
 
 class MyStatefulWidget extends StatefulWidget {
@@ -48,8 +45,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             _buildOffstageNavigator(1),
             _buildOffstageNavigator(2),
             _buildOffstageNavigator(3),
-            _buildOffstageNavigator(4),
-            _buildOffstageNavigator(5),
           ],
         ),
 
@@ -74,21 +69,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 label: 'Quiz',
                 backgroundColor: Color(0xFF1A237E),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.insert_chart),
-                label: 'Statistique',
-                backgroundColor: Color(0xFF1A237E),
-              ),
+
               BottomNavigationBarItem(
                 icon: Icon(Icons.ondemand_video),
                 label: 'Vidéos',
                 backgroundColor: Color(0xFF1A237E),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_pin),
-                label: 'Compte',
-                backgroundColor: Color(0xFF1A237E),
-              ),
+
             ],
             currentIndex: _selectedIndex,
             showSelectedLabels: true,
@@ -107,7 +94,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       '/': (context) {
         return [
           const localisation(),
-          CoursePage(),
+          cours(),
           QuizSelectionPage(
             quizTypes: {
               "Quiz 1": [
@@ -147,9 +134,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               ]
             },
           ),
-          const statistique(),
+
           const video(),
-          const compte(),
+
         ].elementAt(index);
       },
     };

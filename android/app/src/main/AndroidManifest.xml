@@ -2,7 +2,7 @@
     package="com.example.ika_auto_ecole">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="ika_auto_ecole"
         android:name="${applicationName}"
