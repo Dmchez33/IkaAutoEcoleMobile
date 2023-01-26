@@ -12,9 +12,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<String> image = [
-    "carousel1.png",
-    "carousel2.png",
-    "carousel3.png"
+    "ima1.png",
+    "ima2.png",
+    "ima3.png"
   ];
 
   bool _isPlaying = true;
@@ -41,8 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
             slideBuilder: (index) {
               return Container(
                 child: Image.asset(
-                  "assets/images/${image[index]}",
-                  fit: BoxFit.fill,
+                  "assets/carousel/${image[index]}",
+                  //fit: BoxFit.fill,
                 ),
               );
             },
@@ -91,9 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 45,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-
-                          backgroundColor: Color(0xFFFFFFFF),
-
+                        backgroundColor: Color(0xFFFFFFFF),
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -104,8 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       },
                       child: const Text("J'AI DEJA UN COMPTE",
-                          style:
-                              TextStyle(fontFamily: "Poppins", fontSize: 16,color: Color(0xFF6200EE)))),
+                          style: TextStyle(
+                              fontFamily: "Poppins",
+                              fontSize: 16,
+                              color: Color(0xFF6200EE)))),
                 ),
                 Container(
                   margin: const EdgeInsets.only(right: 20, top: 15),
@@ -121,9 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           style: TextStyle(
                               fontFamily: "Poppins",
                               fontSize: 16,
-                              color: Colors.white)
-                      )
-                  ),
+                              color: Colors.white))),
                 )
               ],
             ),

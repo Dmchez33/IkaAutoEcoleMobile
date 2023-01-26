@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
 /*
 //AFFICHER D'UNE PREMIER PAGE LORS DE LANCEMENT DE L'APPLICATION
 import 'package:flutter/material.dart';

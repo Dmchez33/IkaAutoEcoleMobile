@@ -38,32 +38,57 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Color(0xFF1A237E),
+        centerTitle: true,
+        title: const Text('Detail cours'),
+        actions: const [
+          CircleAvatar(
+            backgroundColor: Colors.black38,
+            child: Icon(Icons.person, color: Colors.white,),
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            //DEBUT DE PLACE DE LA VIDEO
-            FutureBuilder(
-              future: _initializeVideoPlayerFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  // If the VideoPlayerController has finished initialization, use
-                  // the data it provides to limit the aspect ratio of the video.
-                  return AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    // Use the VideoPlayer widget to display the video.
-                    child: VideoPlayer(_controller),
-                  );
-                } else {
-                  // If the VideoPlayerController is still initializing, show a
-                  // loading spinner.
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
+            Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.15,
+              child: Image.asset(
+                'assets/cours/image1.png',
+                fit: BoxFit.fill,
+              ),
             ),
-            /*FloatingActionButton(
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  //DEBUT DE PLACE DE LA VIDEO
+                  Container(
+                    margin: EdgeInsets.all(20),
+                    child: FutureBuilder(
+                      future: _initializeVideoPlayerFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          // If the VideoPlayerController has finished initialization, use
+                          // the data it provides to limit the aspect ratio of the video.
+                          return AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            // Use the VideoPlayer widget to display the video.
+                            child: VideoPlayer(_controller),
+                          );
+                        } else {
+                          // If the VideoPlayerController is still initializing, show a
+                          // loading spinner.
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                  /*FloatingActionButton(
               onPressed: () {
                 // Wrap the play or pause in a call to `setState`. This ensures the
                 // correct icon is shown.
@@ -82,34 +107,34 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
                 _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
               ),
             ),*/
-            //FIN DE LA PLACE DE LA VIDEO
+                  //FIN DE LA PLACE DE LA VIDEO
 
-            //DEBUT DE LA PLACE DE L'IMAGE
-            ListTile(
-              leading: SizedBox(
-                height: 1000,
-                child: Image.asset(
-                  "assets/images/imagecours/notion_theorie.png",
-                  fit: BoxFit.cover,
-                ),
+                  //DEBUT DE LA PLACE DE L'IMAGE
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 150,
+                        child: Image.asset(
+                          "assets/images/imagecours/notion_theorie.png",
+                          width: MediaQuery.of(context).size.width * .4,
+                          fit: BoxFit.fill,
+                          height: MediaQuery.of(context).size.height,
+                        ),
+                      ),
+                       Container(
+                        width: 200,
+                          child: Text(
+                        "L’arrêt est l’immobilisation momentanée d’un véhicule pour permettre : La montée ou descente de passagers, Le chargement ou le dechargement d’objets. Le conducteur doit rester près de la véhicule pour être en mesure de le deplacer en cas de besoin.",
+                        textAlign: TextAlign.justify,
+                      ))
+                    ],
+                  )
+
+
+                ],
               ),
-              title:  const Text(
-                    "L’arrêt est l’immobilisation momentanée d’un véhicule pour permettre :",
-                    textAlign: TextAlign.justify,
-                 )
-            ),
-            Container(
-              child: const Text(
-                "La montée ou descente de passagers, Le chargement ou le dechargement d’objets. Le conducteur doit rester près de la véhicule pour être en mesure de le deplacer en cas de besoin.",
-                textAlign: TextAlign.justify,
-              ),
-            ),
-
-
-            //FIN DE LA PLACE DE L'IMAGE
-
-            //DEBUT DE LA PLACE DU CONTENU
-            //FIN DE LA PLACE DU CONTENU
+            )
           ],
         ),
       ),

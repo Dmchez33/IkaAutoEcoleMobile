@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ika_auto_ecole/Pages/Quiz/quizPage.dart';
 
+import '../widgets/question_screen.dart';
 import 'Question.dart';
 
 class QuizSelectionPage extends StatelessWidget {
@@ -9,12 +10,12 @@ class QuizSelectionPage extends StatelessWidget {
   QuizSelectionPage({required this.quizTypes});
 
   void _startQuiz(BuildContext context, String quizType) {
-    Navigator.push(
+    /*Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => QuizPage(questions: quizTypes[quizType]!, ),
       ),
-    );
+    );*/
   }
 
   @override
@@ -43,7 +44,7 @@ class QuizSelectionPage extends StatelessWidget {
                     Expanded(child: Text(quizType,style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)))
                   ],
                 ),
-                onPressed: () => _startQuiz(context, quizType),
+                onPressed: () => QuestionsScreen(),
               ),
           ],
         ),

@@ -7,6 +7,7 @@ import 'package:ika_auto_ecole/Pages/Statistique/statistique.dart';
 import 'package:ika_auto_ecole/Pages/Videos/video.dart';
 import 'package:ika_auto_ecole/Pages/map/listeLieux.dart';
 import 'package:ika_auto_ecole/Pages/map/map.dart';
+import 'package:ika_auto_ecole/Pages/widgets/question_screen.dart';
 
 import '/Pages/Cours/coursePage.dart';
 import '/Pages/Quiz/Question.dart';
@@ -95,6 +96,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         return [
           const localisation(),
           cours(),
+          //QuestionsScreen(),
           QuizSelectionPage(
             quizTypes: {
               "Quiz 1": [
@@ -162,7 +164,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 class TestScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return TestScreenState();
+    return MyStatefulWidgetState();
   }
 }
 

@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
@@ -185,4 +186,4 @@ class _QuizPageState extends State<QuizPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
     );
   }
-}
+}*/

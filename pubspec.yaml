@@ -52,6 +52,9 @@ dependencies:
   custom_navigator: ^0.3.0
   banner_carousel: ^1.2.1
   video_player: ^2.5.1
+  just_audio: ^0.9.31
+  fluttertoast: ^8.1.2
+  flutter_map: ^3.1.0
 
 
 dev_dependencies:
@@ -81,7 +84,10 @@ flutter:
   assets:
     - assets/images/
     - assets/images/imagecours/
+    - assets/carousel/
+    - assets/cours/
     - assets/logo/
+    - assets/audio/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

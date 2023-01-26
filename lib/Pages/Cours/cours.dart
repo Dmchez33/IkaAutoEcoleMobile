@@ -11,29 +11,13 @@ class cours extends StatefulWidget {
 }
 
 class _coursState extends State<cours> {
-  final List<Map<String,String>> test = [
-    {"text":"Partage de la route",
-      "url":"partage de la route.jpg"
-      },
-    {"text":"Panneau de signalisation",
-      "url":"panneau_de_signal.jpg"
-      },
-    {"text":"Notion théoriques et pratiques",
-      "url":"notion_theorie.png"
-      },
-    {
-      "text":"Priorités",
-      "url":"priorite.PNG"
-    },
-    {
-      "text":"Regle a la circulation",
-      "url":"regle.png"
-    },
-    {
-      "text":"Prise de conscience",
-      "url":"regle.png"
-    }
-
+  final List<Map<String, String>> test = [
+    {"text": "Partage de la route", "url": "partage de la route.jpg"},
+    {"text": "Panneau de signalisation", "url": "panneau_de_signal.jpg"},
+    {"text": "Notion théoriques et pratiques", "url": "notion_theorie.png"},
+    {"text": "Priorités", "url": "priorite.PNG"},
+    {"text": "Regle a la circulation", "url": "regle.png"},
+    {"text": "Prise de conscience", "url": "regle.png"}
   ];
   final List<String> url = [
     "partage de la route.jpg",
@@ -43,28 +27,33 @@ class _coursState extends State<cours> {
     "regle.png",
     "regle.png"
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        toolbarHeight: 30,
         backgroundColor: Color(0xFF1A237E),
         centerTitle: true,
         title: const Text('Cours'),
-        actions: [Image.asset('assets/images/logoIkaAutoEcole.png')],
+        actions: const [
+          CircleAvatar(
+            backgroundColor: Colors.black38,
+            child: Icon(Icons.person, color: Colors.white,),
+          )
+          ],
       ),
       body: Container(
         child: Column(
           children: [
-            Container(
+            /*Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height * 0.10,
               child: Image.asset(
                 'assets/images/cours1.png',
                 fit: BoxFit.fill,
               ),
-            ),
+            ),*/
             Expanded(
               child: Center(
                   child: GridView.count(
@@ -78,8 +67,7 @@ class _coursState extends State<cours> {
                 // nombre d'elements par ligne
                 shrinkWrap: true,
                 children: [
-
-                   Card(
+                  Card(
                       elevation: 2,
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
@@ -89,12 +77,14 @@ class _coursState extends State<cours> {
                         // borderRadius: const BorderRadius.all(Radius.circular(12)),
                       ),
                       child: InkWell(
-                        onTap: () { Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailCoursPage(),
-                          ),
-                        ); },
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailCoursPage(),
+                            ),
+                          );
+                        },
                         child: Stack(
                           children: [
                             Container(
@@ -235,24 +225,25 @@ class _coursState extends State<cours> {
 
             /// Banner Customized Without Indicator
             BannerCarousel(
-              height: 60,
-              animation: false,
-              viewportFraction: 0.60,
+              height: 110,
+              animation: true,
+              viewportFraction: 0.8,
               showIndicator: true,
+              spaceBetween: 1.0,
               customizedBanners: [
                 Stack(
                   children: [
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
-                        border: Border.all(
+                        /*border: Border.all(
                           color: Colors.green,
                           width: 1,
-                        ),
+                        ),*/
                         borderRadius: BorderRadius.circular(5),
                         image: const DecorationImage(
-                          image: AssetImage(
-                              'assets/images/imagecours/regle.png'),
+                          image:
+                          AssetImage('assets/images/imagecours/Partage_de_la_route.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -266,7 +257,77 @@ class _coursState extends State<cours> {
                           child: const FittedBox(
                               fit: BoxFit.fitWidth,
                               child: Text(
-                                'Notion théoriques et pratiques',
+                                'Partage de la route',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ))),
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      decoration: BoxDecoration(
+                        /*border: Border.all(
+                          color: Colors.green,
+                          width: 1,
+                        ),*/
+                        borderRadius: BorderRadius.circular(5),
+                        image: const DecorationImage(
+                          image:
+                          AssetImage('assets/images/imagecours/tunel.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                          alignment: Alignment.bottomCenter,
+                          height: 20,
+                          color: Colors.white,
+                          child: const FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                'Tunels et partages',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ))),
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      decoration: BoxDecoration(
+                        /*border: Border.all(
+                          color: Colors.green,
+                          width: 1,
+                        ),*/
+                        borderRadius: BorderRadius.circular(5),
+                        image: const DecorationImage(
+                          image:
+                              AssetImage('assets/images/imagecours/Visibilité_et_eclairage.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                          alignment: Alignment.bottomCenter,
+                          height: 20,
+                          color: Colors.white,
+                          child: const FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                'Visibilité et eclairage',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
