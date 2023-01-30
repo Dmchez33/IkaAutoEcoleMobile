@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:banner_carousel/banner_carousel.dart';
 import 'package:flutter/material.dart';
+import 'package:ika_auto_ecole/Pages/Cours/ListeCoursParContenu.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Compte/Connexion.dart';
+import '../Compte/compte.dart';
 import 'DetailCours.dart';
 
 class cours extends StatefulWidget {
@@ -28,20 +34,72 @@ class _coursState extends State<cours> {
     "regle.png"
   ];
 
+  //INFORMATIONS CONCERNANT LES INFORMATION DE L'UTILISATEUR CONNECTER
+  late SharedPreferences sharedPreferences;
+
+  /*late int id;
+  late String username;
+
+  late String email;
+
+  late List roles;
+
+  late String accessToken;
+
+  late String tokenType;*/
+  bool isLoggedIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  checkLoginStatus() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    isLoggedIn = sharedPreferences.getBool("isLoggedIn")!;
+    //String? jsonString = sharedPreferences.getString("body");
+    //Map<String, dynamic> jsonMap = json.decode(jsonString!);
+    //id = jsonMap['id'];
+    /*username = jsonMap['username'];
+    email = jsonMap['email'];
+    roles = jsonMap['roles'];
+    accessToken = jsonMap['accessToken'];
+    tokenType = jsonMap['tokenType'];*/
+
+    if (sharedPreferences.getString("accessToken") == null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+          (Route<dynamic> route) => false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xFF1A237E),
+        backgroundColor: const Color(0xFF1A237E),
         centerTitle: true,
         title: const Text('Cours'),
-        actions: const [
-          CircleAvatar(
-            backgroundColor: Colors.black38,
-            child: Icon(Icons.person, color: Colors.white,),
-          )
-          ],
+        actions: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF1A237E)),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => compte()),
+                  );
+            },
+            child: const CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.person,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Container(
         child: Column(
@@ -81,7 +139,7 @@ class _coursState extends State<cours> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DetailCoursPage(),
+                              builder: (context) => const ListeCoursParContenu(),
                             ),
                           );
                         },
@@ -89,11 +147,12 @@ class _coursState extends State<cours> {
                           children: [
                             Container(
                                 child: Image.asset(
-                              "assets/images/imagecours/partage de la route.jpg",
+                              "assets/images/imagecours/arret et stationnement.png",
                               height: 250,
                               width: double.infinity,
                               fit: BoxFit.cover,
-                            )),
+                            )
+                            ),
                             Container(
                               alignment: Alignment.bottomCenter,
                               child: Container(
@@ -103,7 +162,7 @@ class _coursState extends State<cours> {
                                   child: const FittedBox(
                                       fit: BoxFit.fitWidth,
                                       child: Text(
-                                        'Partage de la route',
+                                        'arret et stationnement',
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -234,7 +293,7 @@ class _coursState extends State<cours> {
                 Stack(
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      margin: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
                         /*border: Border.all(
                           color: Colors.green,
@@ -242,8 +301,8 @@ class _coursState extends State<cours> {
                         ),*/
                         borderRadius: BorderRadius.circular(5),
                         image: const DecorationImage(
-                          image:
-                          AssetImage('assets/images/imagecours/Partage_de_la_route.png'),
+                          image: AssetImage(
+                              'assets/images/imagecours/Partage_de_la_route.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -269,7 +328,7 @@ class _coursState extends State<cours> {
                 Stack(
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      margin: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
                         /*border: Border.all(
                           color: Colors.green,
@@ -278,7 +337,7 @@ class _coursState extends State<cours> {
                         borderRadius: BorderRadius.circular(5),
                         image: const DecorationImage(
                           image:
-                          AssetImage('assets/images/imagecours/tunel.png'),
+                              AssetImage('assets/images/imagecours/tunel.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -304,7 +363,7 @@ class _coursState extends State<cours> {
                 Stack(
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      margin: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
                         /*border: Border.all(
                           color: Colors.green,
@@ -312,8 +371,8 @@ class _coursState extends State<cours> {
                         ),*/
                         borderRadius: BorderRadius.circular(5),
                         image: const DecorationImage(
-                          image:
-                              AssetImage('assets/images/imagecours/Visibilité_et_eclairage.png'),
+                          image: AssetImage(
+                              'assets/images/imagecours/Visibilité_et_eclairage.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -344,3 +403,62 @@ class _coursState extends State<cours> {
     );
   }
 }
+
+/*
+
+//METHODE PERMETTANT DE DECONNECTER UN UTILISATEUR
+PopupMenuButton(
+            itemBuilder: (context) {
+              List<PopupMenuItem<int>> items = [];
+              items.add(const PopupMenuItem(
+                value: 1,
+                child: Text("Profil"),
+              ));
+
+              if (isLoggedIn) {
+                isLoggedIn = false;
+                items.add(PopupMenuItem(
+                  value: 2,
+                  child: ElevatedButton(
+
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                    onPressed: () {
+                      sharedPreferences.clear();
+                      sharedPreferences.commit();
+                      /*Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => LoginPage()),
+                          (Route<dynamic> route) => false);*/
+                    },
+                    child: Text("Déconnecter", style: TextStyle(color: Colors.black),),
+                  ),
+                ));
+              }else{
+                items.add(PopupMenuItem(
+                  value: 2,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(elevation: 0, backgroundColor: Colors.white),
+                    onPressed: () {
+                      sharedPreferences.clear();
+                      sharedPreferences.commit();
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => LoginPage()),
+                              (Route<dynamic> route) => false);
+                    },
+                    child: Text("Connecter",style: TextStyle(color: Colors.black),),
+                  ),
+                ));
+              }
+
+              return items;
+            },
+            icon: const CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.person,
+                color: Colors.black,
+              ),
+            ),
+          ),
+ */

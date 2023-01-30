@@ -3,6 +3,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:label="ika_auto_ecole"
         android:name="${applicationName}"
@@ -33,5 +36,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- the first key of google map AIzaSyCGShAceyIm1LHL2mLja@eKCKDjoZV2RzY -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCGShAceyIm1LHL2mLja@eKCKDjoZV2RzY"/>
     </application>
 </manifest>

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ika_auto_ecole/Pages/Compte/compte.dart';
 import 'package:ika_auto_ecole/Pages/Cours/cours.dart';
@@ -8,46 +10,108 @@ import 'package:ika_auto_ecole/Pages/Videos/video.dart';
 import 'package:ika_auto_ecole/Pages/map/listeLieux.dart';
 import 'package:ika_auto_ecole/Pages/map/map.dart';
 import 'package:ika_auto_ecole/Pages/widgets/question_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '/Pages/Cours/coursePage.dart';
 import '/Pages/Quiz/Question.dart';
 import '/Pages/Quiz/SeletedQuestionPage.dart';
+import 'Compte/Connexion.dart';
 
-
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static final List<Widget> _widgetOptions = <Widget>[
+    const localisation(),
+    cours(),
+    //QuestionsScreen(),
+    QuizSelectionPage(
+      quizTypes: {
+        "Quiz 1": [
+          Question(
+            questionText: "Quel est la capital du Mali?",
+            options: ["Bamako", "Togo", "Kidal", "Sikasso"],
+            imageUrl: "assets/logo/logonoir.png",
+            correctAnswer: "Bamako",
+          ),
+          Question(
+            questionText: "Quel est la capital du Sénégal?",
+            options: ["Paris", "Dakar", "Londre", "Bamako"],
+            correctAnswer: "Dakar",
+          ),
+          Question(
+            questionText: "Quel est la capital de la Cote d'ivoire?",
+            options: ["Abuja", "Yorosso", "Benin", "Berlin"],
+            correctAnswer: "Paris",
+          ),
+        ],
+        "Quiz 2": [
+          Question(
+            questionText: "Qui est Alassane Dramane Ouatara la Côte d'ivoire?",
+            options: [
+              "Président",
+              "Premier Ministre",
+              "Ancien Debuté",
+              "Joueur"
+            ],
+            correctAnswer: "Président",
+          ),
+          Question(
+            questionText: "Qui est Assimi Goita du Mali?",
+            options: ["Président", "Militaire", "Ancien Debuté", "Joueur"],
+            correctAnswer: "Militaire",
+          ),
+          Question(
+            questionText: "Qui est Modibo Keita du Mali?",
+            options: ["Président", "Politicien", "Ancien President", "Joueur"],
+            correctAnswer: "Ancien President",
+          ),
+        ]
+      },
+    ),
 
+    const video(),
+  ];
 
   void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  /*void _onItemTapped(int index) {
     if (_selectedIndex == 1 && index == 0) {
       Navigator.popUntil(context, ModalRoute.withName("/localisation"));
     }
     setState(() {
       _selectedIndex = index;
     });
-  }
+  }*/
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //LE CORPS DE L'APP A L'INTERIEUR DUQUEL LE CONTENU DES ELEMENTS AFFICHERA
-        body: Stack(
+        //LE CORPS DE L'APP A L'INTERIEUR DUQUEL LE CONTENU DES ELEMENTS AFFICHERA
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+        /*Stack(
           children: [
             _buildOffstageNavigator(0),
             _buildOffstageNavigator(1),
             _buildOffstageNavigator(2),
             _buildOffstageNavigator(3),
           ],
-        ),
+        ),*/
 
         //WIDGET ClipRRect PERMET D'AJOUTER UN BORDER RADIUS A UN NOTRE WIDGET
         bottomNavigationBar: ClipRRect(
@@ -56,8 +120,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           child: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.map),
-                label: 'Localisation',
+                icon: Icon(Icons.home),
+                label: 'Accueil',
                 backgroundColor: Color(0xFF1A237E),
               ),
               BottomNavigationBarItem(
@@ -70,27 +134,39 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 label: 'Quiz',
                 backgroundColor: Color(0xFF1A237E),
               ),
-
               BottomNavigationBarItem(
                 icon: Icon(Icons.ondemand_video),
                 label: 'Vidéos',
                 backgroundColor: Color(0xFF1A237E),
               ),
-
             ],
             currentIndex: _selectedIndex,
             showSelectedLabels: true,
             showUnselectedLabels: false,
-            onTap: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
+            selectedItemColor: Colors.amber[800],
+            onTap: _onItemTapped,
           ),
         ));
   }
+  //MODAL DIALOGUE
+  void showModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        content: const Text('Example Dialog'),
+        actions: <TextButton>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Close'),
+          )
+        ],
+      ),
+    );
+  }
 
-  Map<String, WidgetBuilder> _routeBuilders(BuildContext context, int index) {
+/*Map<String, WidgetBuilder> _routeBuilders(BuildContext context, int index) {
     return {
       '/': (context) {
         return [
@@ -157,121 +233,5 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         },
       ),
     );
-  }
+  }*/
 }
-
-/*
-class TestScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return MyStatefulWidgetState();
-  }
-}
-
-class TestScreenState extends State<TestScreen> {
-  PageController _pageController = PageController();
-
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static  final List<Widget> _widgetOptions = <Widget>[
-    const localisation(),
-    CoursePage(),
-    QuizSelectionPage(
-      quizTypes: {
-        "Quiz 1": [
-          Question(
-            questionText: "Quel est la capital du Mali?",
-            options: ["Bamako", "Togo", "Kidal", "Sikasso"],
-            imageUrl: "assets/logo/logonoir.png",
-            correctAnswer: "Bamako",
-          ),
-          Question(
-            questionText: "Quel est la capital du Sénégal?",
-            options: ["Paris", "Dakar", "Londre", "Bamako"],
-            correctAnswer: "Dakar",
-          ),
-          Question(
-            questionText: "Quel est la capital de la Cote d'ivoire?",
-            options: ["Abuja", "Yorosso", "Benin", "Berlin"],
-            correctAnswer: "Paris",
-          ),
-        ],
-        "Quiz 2": [
-          Question(
-            questionText: "Qui est Alassane Dramane Ouatara la Côte d'ivoire?",
-            options: ["Président", "Premier Ministre", "Ancien Debuté", "Joueur"],
-            correctAnswer: "Président",
-          ),
-          Question(
-            questionText: "Qui est Assimi Goita du Mali?",
-            options: ["Président", "Militaire", "Ancien Debuté", "Joueur"],
-            correctAnswer: "Militaire",
-          ),
-          Question(
-            questionText: "Qui est Modibo Keita du Mali?",
-            options: ["Président", "Politicien", "Ancien President", "Joueur"],
-            correctAnswer:  "Ancien President",
-          ),
-        ]
-      },
-    ),
-    const video(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  int _currentIndex = 0;
-  bool _showBottomNavigationBar = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _widgetOptions,
-      ),
-      bottomNavigationBar:
-      Offstage(
-        offstage: !_showBottomNavigationBar,
-        child: CustomBottomNavigationBar(
-          backgroundColor: Color(0xFF1A237E),
-          itemBackgroudnColor: Color(0xFF1A237E),
-          items: [
-            CustomBottomNavigationBarItem(
-              icon: Icons.map,
-              title: 'Localisat',
-            ),
-            CustomBottomNavigationBarItem(
-              icon: Icons.menu_book,
-              title: 'Cours',
-            ),
-            CustomBottomNavigationBarItem(
-              icon: Icons.question_answer,
-              title: 'Quiz',
-            ),
-            CustomBottomNavigationBarItem(
-              icon: Icons.ondemand_video,
-              title: 'video',
-            ),
-          ],
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-              if (index == 5) {
-                _showBottomNavigationBar = false;
-              } else {
-                _showBottomNavigationBar = true;
-              }
-            });
-          },
-        ),
-      )
-
-    );
-  }
-}*/

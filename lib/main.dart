@@ -1,8 +1,127 @@
-
+import 'dart:async';
+import 'dart:convert';
+// import 'package:latlong2/latlong.dart' as LatLng;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Pages/Compte/Connexion.dart';
 import 'Pages/HomePage.dart';
 import 'Pages/carousel.dart';
+
+
+
+/*class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'JWT TOKEN FLUTTER APP',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MainPage(),
+    );
+  }
+}
+
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+
+
+  late SharedPreferences sharedPreferences;
+
+  late int id;
+  late String username ;
+  late String email ;
+  late List roles ;
+  late String accessToken ;
+  late String tokenType ;
+
+  @override
+  void initState(){
+    super.initState();
+    checkLoginStatus();
+  }
+
+  checkLoginStatus() async{
+    sharedPreferences = await SharedPreferences.getInstance();
+
+    String? jsonString = sharedPreferences.getString("body");
+    Map<String, dynamic> jsonMap = json.decode(jsonString!);
+    id = jsonMap['id'];
+    username = jsonMap['username'];
+    email = jsonMap['email'];
+    roles = jsonMap['roles'];
+    accessToken = jsonMap['accessToken'];
+    tokenType = jsonMap['tokenType'];
+
+    print(id);
+
+    if(sharedPreferences.getString("accessToken") == null){
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+              (Route<dynamic> route) => false
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('JWT TOKEN'),
+        actions: <Widget>[
+          ElevatedButton(
+            onPressed: (){
+              sharedPreferences.clear();
+              sharedPreferences.commit();
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+                      (Route<dynamic> route) => false
+              );
+            },
+            child: Text('Logout'),
+          ),
+        ],
+      ),
+      body: Center(
+        child: Text('Main Page'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountName: Text('Idrissz'),
+              accountEmail: Text('idrissa@gmail.com'),
+            ),
+
+            ListTile(
+              title: Text('List Products'),
+              trailing: Icon(Icons.list),
+              onTap: (){},
+            ),
+
+            ListTile(
+              title: Text('Add Products'),
+              trailing: Icon(Icons.add),
+              onTap: (){},
+            ),
+
+            ListTile(
+              title: Text('Register User'),
+              trailing: Icon(Icons.person_add),
+              onTap: (){},
+            ),
+
+          ],
+        ),
+      ),
+    );
+  }
+}*/
 
 void main() => runApp(const MyApp());
 
@@ -19,12 +138,27 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Poppins',
       ),
-      home: MyHomePage(),
+      home:FutureBuilder(
+        future: _checkUser(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data;
+          }
+          return CircularProgressIndicator();
+        },
+      ),
 
     );
   }
+  Future<Widget> _checkUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
+    if (isLoggedIn) {
+      return MainPage();
+    }
+    return CarouselPage();
+  }
 }
-
 
 /*
 //AFFICHER D'UNE PREMIER PAGE LORS DE LANCEMENT DE L'APPLICATION

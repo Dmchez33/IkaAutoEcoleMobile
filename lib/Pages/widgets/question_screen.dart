@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ika_auto_ecole/Pages/widgets/question_widget.dart';
 import 'package:ika_auto_ecole/Pages/widgets/result_box.dart';
 
@@ -149,11 +149,11 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           isAlreadySelected = false;
         });
       } else {
-        Fluttertoast.showToast(
-          msg: 'Choississez une réponse svp !',
-          textColor: Colors.white,
-          backgroundColor: background
-        );
+        // Fluttertoast.showToast(
+        //   msg: 'Choississez une réponse svp !',
+        //   textColor: Colors.white,
+        //   backgroundColor: background
+        // );
         /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Choississez une réponse svp !'),
           behavior: SnackBarBehavior.floating,

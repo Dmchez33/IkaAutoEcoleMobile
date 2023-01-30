@@ -17,7 +17,7 @@ class Question {
     required this.options, required String question,
   });
 
-  get question => null;
+  get question => title;
 
   // override the toString method to print the questions on console
   @override

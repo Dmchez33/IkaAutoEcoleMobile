@@ -1,10 +1,16 @@
 import 'package:animated_icon_button/animated_icon_button.dart';
+import 'package:circular_image/circular_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
+import 'package:ika_auto_ecole/Pages/map/DetailLieuxMap.dart';
 import 'package:ika_auto_ecole/Pages/map/listeLieux.dart';
 import 'package:select_searchable_list/select_searchable_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Compte/Connexion.dart';
+import '../Compte/compte.dart';
 
 class localisation extends StatefulWidget {
   const localisation({Key? key}) : super(key: key);
@@ -14,229 +20,254 @@ class localisation extends StatefulWidget {
 }
 
 class _localisationState extends State<localisation> {
-  final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
+  late String _selectedRegion = 'Badalabougou';
+  List<String> _regions = [
+    'Badalabougou',
+    'Niamana',
+    'Daoudabougou',
+    'ACI 200'
   ];
-  String? selectedValue;
 
-  List<DropdownMenuItem<String>> _addDividersAfterItems(List<String> items) {
-    List<DropdownMenuItem<String>> _menuItems = [];
-    for (var item in items) {
-      _menuItems.addAll(
-        [
-          DropdownMenuItem<String>(
-            value: item,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                item,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ),
-          //If it's last item, we will not add Divider after it.
-          if (item != items.last)
-            const DropdownMenuItem<String>(
-              enabled: false,
-              child: Divider(),
-            ),
-        ],
-      );
-    }
-    return _menuItems;
+  //MAP
+  late SharedPreferences sharedPreferences;
+  bool isLoggedIn = false;
+  bool showWidget = true;
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+    showWidget = true;
   }
 
-  List<double> _getCustomItemsHeights() {
-    List<double> _itemsHeights = [];
-    for (var i = 0; i < (items.length * 2) - 1; i++) {
-      if (i.isEven) {
-        _itemsHeights.add(40);
-      }
-      //Dividers indexes will be the odd indexes
-      if (i.isOdd) {
-        _itemsHeights.add(4);
-      }
+  checkLoginStatus() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    isLoggedIn = sharedPreferences.getBool("isLoggedIn")!;
+
+    if (sharedPreferences.getString("accessToken") == null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+          (Route<dynamic> route) => false);
     }
-    return _itemsHeights;
   }
-
-  final Map<int, String> _listCategories = {
-    1: 'Boot',
-    2: 'Casual',
-    3: 'Flat',
-    4: 'Flip',
-    5: 'Lace up',
-    6: 'Loafer',
-    7: 'Slip-on',
-    8: 'Moccasins'
-  };
-
-  // Default value
-  final List<int> _selectedCategory = [1];
-
-  final Map<int, String> _listColors = {
-    1: 'Black',
-    2: 'Blue',
-    3: 'Brown',
-    4: 'Gold',
-    5: 'Green',
-    6: 'Grey',
-    7: 'Orange',
-    8: 'Pink',
-    9: 'Purple',
-    10: 'Red'
-  };
-
-  // Default value
-  final List<int> _selectedColors = [2, 4];
-  final TextEditingController _categoryTextEditingController =
-      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF1A237E),
+        elevation: 0,
+        backgroundColor: const Color(0xFF1A237E),
         centerTitle: true,
-        title: const Text('Localisation'),
-        actions: [Image.asset('assets/images/logoIkaAutoEcole.png')],
-      ),
-      body:
-          Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.25,
-              child: Image.asset(
-                'assets/images/localisation.png',
-                fit: BoxFit.fill,
+        title: const Text('Accueil'),
+        actions: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF1A237E)),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (BuildContext context) => compte()),
+              );
+            },
+            child: const CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.person,
+                color: Colors.black,
               ),
             ),
-            Expanded(
-                child: SingleChildScrollView(
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 250,
+            decoration: const BoxDecoration(
+              color: Color(0xFF1A237E),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    "Cliquez pour trouver l'auto-école près de chez vous et réservez vos cours dès maintenant !",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.white),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      margin: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.all(10),
+                      child: const Icon(
+                        Icons.fmd_good_outlined,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      margin: const EdgeInsets.only(top: 20),
+                      height: 44,
+                      width: MediaQuery.of(context).size.width * .7,
+                      child: DropdownButton(
+                        icon: Container(
+                          margin: const EdgeInsets.only(left: 120),
+                          //width: MediaQuery.of(context).size.width *.5,
+                          alignment: Alignment.centerLeft,
+                          child: const Icon(Icons.arrow_drop_down),
+                        ),
+                        value: _selectedRegion,
+                        items: _regions.map((String value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedRegion = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * .7,
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF6200EE)),
+                    child: const Text('Rechercher'),
+                    onPressed: () {
+                      // handle search here
+                      setState(() {
+                        showWidget = false;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Card(
-                    elevation: 0,
-                    child: ListTile(
-                      leading: Image.asset('assets/images/localisateur.png',
-                          width: 100, height: 100, fit: BoxFit.fill),
-                      title: const Text(
-                        'Ne perdez plus de temps à chercher une auto-école près de chez vous !',
-                        style: TextStyle(
-                          letterSpacing: 1,
-                          wordSpacing: 2,
-                          fontFamily: 'Poppins',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                  if (showWidget) ...[
+                    Column(
+                      children: <Widget>[
+                        const Text(
+                          "Pour quoi avons nous créé cette application ?",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                  ),
-                  const Card(
-                    elevation: 0,
-                    child: ListTile(
-                      title: Text(
-                        'Avec notre page de localisation sur IKAAUTOECOLE '
-                        'vous pouvez facilement trouver les auto-écoles les plus '
-                        'proches de votre adresse.',
-                        style: TextStyle(
-                          letterSpacing: 1,
-                          wordSpacing: 2,
-                          fontFamily: 'Poppins',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                        Container(
+                          child: Image.asset(
+                            "assets/images/imageMap/image2.png",
+                            width: 300,
+                          ),
                         ),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                  ),
-                  Card(
-                    elevation: 0,
-                    child: Image.asset('assets/images/Image.png',
-                        fit: BoxFit.cover),
-                  ),
-                  const Card(
-                    elevation: 0,
-                    child: ListTile(
-                      title: Text(
-                        "Cliquez pour trouver l'auto-école près de chez vous et réservez vos cours dès maintenant !",
-                        style: TextStyle(
-                          letterSpacing: 1,
-                          wordSpacing: 2,
-                          fontFamily: 'Poppins',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                  ),
-
-                  /*Card(
-                        elevation: 0,
-                        child: ListTile(
-                          leading: Image.asset('assets/images/cours.png',width: 100,height: 100,fit: BoxFit.fill),
+                        ListTile(
+                          leading: Image.asset(
+                            "assets/images/imageMap/trouver.png",
+                            width: 60,
+                          ),
                           title: const Text(
-                              'Faites un pas vers votre permis de conduire '
-                                  'en utilisant notre plateforme efficace et pratique.',style: TextStyle(letterSpacing: 1, wordSpacing: 2,fontFamily: 'Poppins',fontSize: 16, fontWeight: FontWeight.w600,),textAlign: TextAlign.justify,),
+                            "Pour que tu puisse trouver les auto-écoles les plus proches de votre adresse.",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.justify,
+                          ),
                         ),
-                      ),*/
-                  Container(
-                    margin: EdgeInsets.only(right: 20, bottom: 20),
-                    child: Align(
-                      alignment: AlignmentDirectional.centerEnd,
-                      child: AnimatedButton(
-                        onPress: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const listeLieux(),
-                                settings:
-                                    const RouteSettings(name: '/listelieux')),
-                          );
-                        },
-                        height: 40,
-                        width: 100,
-                        text: '>>',
-                        selectedGradientColor: const LinearGradient(
-                            colors: [Color(0xFF1A237E), Color(0xFF1A237E)]),
-                        isReverse: true,
-                        selectedTextColor: Colors.white,
-                        transitionType: TransitionType.LEFT_CENTER_ROUNDER,
-                        textStyle: TextStyle(color: Colors.black),
-                        borderColor: Colors.black,
-                        borderWidth: 1,
-                        borderRadius: 5,
-                      ),
+                        ListTile(
+                          trailing: Image.asset(
+                            "assets/images/imageMap/progression.png",
+                            width: 60,
+                          ),
+                          title: const Text(
+                            "Pour que tu puisse suivre ta progression en effectuant nos differents quiz",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Card(
-                    child: DropDownTextField(
-                      textEditingController: _categoryTextEditingController,
-                      title: 'Category',
-                      hint: 'Select Category',
-                      options: _listCategories,
-                      selectedOptions: _selectedCategory,
-                      onChanged: (selectedIds) {
-                        // setState(() => selectedIds);
-                      },
-                    ),
-                  )
+                  ] else ...[
+                    Container(
+                        child: Column(
+                      children: [
+                        Card(
+
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const DetailLieuxMap(),
+                                ),
+                              );
+                            },
+                            child: ListTile(
+                              leading:CircularImage(radius:20, borderWidth:1,borderColor:Colors.white, source: 'assets/images/imageMap/progression.png'),
+                              title: const Text(
+                                "Auto ecole Kanaga",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.justify,
+                              ),
+                              subtitle: Text('20 23 01 02 / 66 73 01 99'),
+                            ),
+                          ),
+                        ),
+                        
+                        Card(
+                          child: ElevatedButton(
+
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white),
+                            onPressed: () {  },
+                            child: ListTile(
+                              leading: CircularImage(
+                                radius:20, borderWidth:1,borderColor:Colors.white,
+                                source:"assets/images/imageMap/progression.png",
+
+
+                              ),
+                              title: const Text(
+                                "Auto ecole Tigana",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.justify,
+                              ),
+                              subtitle: Text('76 55 23 23 / 63 63 63 51'),
+                            ),
+                          ),
+                        )
+                      ],
+                    ))
+                  ],
                 ],
               ),
-            )
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

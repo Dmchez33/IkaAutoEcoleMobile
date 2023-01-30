@@ -5,12 +5,12 @@ import 'package:ika_auto_ecole/Pages/Compte/Inscription.dart';
 import 'Compte/Connexion.dart';
 import 'HomePage.dart';
 
-class MyHomePage extends StatefulWidget {
+class CarouselPage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _CarouselPageState createState() => _CarouselPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _CarouselPageState extends State<CarouselPage> {
   final List<String> image = [
     "ima1.png",
     "ima2.png",
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Connexion(),
+                            builder: (context) => LoginPage(),
                           ),
                         );
                       },
@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MyStatefulWidget()),
+                              builder: (context) => MainPage()),
                         );
                       },
                       child: const Text("PLUS TARD",
