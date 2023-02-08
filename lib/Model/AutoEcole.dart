@@ -73,7 +73,7 @@ class AutoEcole {
   }
 }
 
-Future<List<AutoEcole>> getAllAutoEcole() async {
+ Future<List<AutoEcole>> getAllAutoEcole() async {
   final http.Response response = await http.get(
     Uri.parse('http://192.168.43.58:8080/api/AutoEcole/getAll'),
     headers: <String, String>{

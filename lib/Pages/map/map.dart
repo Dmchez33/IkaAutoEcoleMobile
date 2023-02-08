@@ -1,8 +1,8 @@
-
 import 'package:audioplayer/audioplayer.dart';
 import 'package:circular_image/circular_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ika_auto_ecole/Model/Adresse.dart';
 import 'package:ika_auto_ecole/Model/AutoEcole.dart';
 import 'package:ika_auto_ecole/Pages/map/DetailLieuxMap.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +14,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/services.dart';
 
 import '../utilities/keys.dart';
+
 class localisation extends StatefulWidget {
   const localisation({Key? key}) : super(key: key);
 
@@ -23,7 +24,11 @@ class localisation extends StatefulWidget {
 
 class _localisationState extends State<localisation> {
   late String _selectedRegion = 'Badalabougou';
-  late List<AutoEcole> _autoEcoles;
+  final ScrollController _controller = ScrollController();
+
+  //Future<List<AutoEcole>> _autoEcoles = [];
+
+  Adresses adresses = Adresses();
   List<String> _regions = [
     'Badalabougou',
     'Niamana',
@@ -38,36 +43,37 @@ class _localisationState extends State<localisation> {
 
   // DEBUT POUR L'AUDIO DE BIENVENU
   late VideoPlayerController controlleraudio;
+
   loadAudioPlayer() {
-    controlleraudio = VideoPlayerController.asset(
-        'assets/audio/bienvenu.mp3');
+    controlleraudio = VideoPlayerController.asset('assets/audio/bienvenu.mp3');
     controlleraudio.addListener(() {
       setState(() {});
     });
     controlleraudio.initialize().then((value) {
       setState(() {});
     });
-
-
-
   }
+
   // FIN POUR L'AUDIO
 
   AudioPlayer _audioPlayer = AudioPlayer();
+
   @override
   void initState() {
     super.initState();
     checkLoginStatus();
+    adresses.getAllAdresses();
     showWidget = true;
+    //print(_autoEcoles[0].nom);
     print("bonjour");
-    getAllAutoEcole().then((autoEcoles) {
+    /*getAllAutoEcole().then((autoEcoles) {
       setState(() {
-        _autoEcoles = autoEcoles;
+        _autoEcoles.add(autoEcoles);
       });
-    });
+    });*/
     //POUR AUDIO
-    print("auo ${_autoEcoles}");
-    if(playAudioWelCome){
+    //print("auo ${_autoEcoles}");
+    if (playAudioWelCome) {
       loadAudioPlayer();
       super.initState();
       controlleraudio.play();
@@ -76,6 +82,14 @@ class _localisationState extends State<localisation> {
 
     //_audioPlayer.play("assets/audio/bienvenu.mp3");
   }
+
+  /*void getAutoEcole() async{
+    var autoEcoles = await getAllAutoEcole();
+    setState(() {
+      _autoEcoles.add(autoEcoles) ;
+
+    });
+  }*/
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -87,7 +101,9 @@ class _localisationState extends State<localisation> {
           (Route<dynamic> route) => false);
     }
   }
+
   bool _played = false;
+
   @override
   Widget build(BuildContext context) {
     /*if (!_played) {
@@ -97,266 +113,326 @@ class _localisationState extends State<localisation> {
       });
     }*/
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: const Color(0xFF1A237E),
-        centerTitle: true,
-        title: const Text('Accueil'),
-        actions: <Widget>[
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF1A237E)),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) => compte()),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: const Color(0xFF1A237E),
+          centerTitle: true,
+          title: const Text('Accueil'),
+          actions: <Widget>[
+            ElevatedButton(
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: Color(0xFF1A237E)),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => compte()),
+                );
+              },
+              child: const CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Icon(
+                  Icons.person,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: FutureBuilder(
+          future: adresses.getAllAdresses(),
+          builder: (context, data) {
+            if (data.hasError) {
+              return Center(
+                child: Text('${data.error}'),
               );
-              
-            },
-            child: const CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.person,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 205,
-            decoration: const BoxDecoration(
-              color: Color(0xFF1A237E),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
-            ),
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: const Text(
-                    "Cliquez pour trouver l'auto-école près de chez vous et réservez vos cours dès maintenant !",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.white),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      margin: const EdgeInsets.only(top: 20),
-                      padding: const EdgeInsets.all(10),
-                      child: const Icon(
-                        Icons.fmd_good_outlined,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      margin: const EdgeInsets.only(top: 20),
-                      height: 44,
-                      width: MediaQuery.of(context).size.width * .7,
-                      child: DropdownButton(
-                        icon: Container(
-                          margin: const EdgeInsets.only(left: 120),
-                          //width: MediaQuery.of(context).size.width *.5,
-                          alignment: Alignment.centerLeft,
-                          child: const Icon(Icons.arrow_drop_down),
-                        ),
-                        value: _selectedRegion,
-                        items: _regions.map((String value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedRegion = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * .7,
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF6200EE)),
-                    child: const Text('Rechercher'),
-                    onPressed: () {
-                      // handle search here
-                      setState(() {
-                        showWidget = false;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  if (showWidget) ...[
-                    Column(
-                      children: <Widget>[
-                        const Text(
-                          "Pour quoi avons nous créé cette application ?",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        JelloIn(
-                          duration: Duration(milliseconds: 5000),
-
-                          child: Image.asset(
-                            "assets/images/imageMap/image2.png",
-                            width: 300,
+            } else if (data.hasData) {
+              var liste = data.data as List<Adresses>;
+              return ListView.builder(
+                controller: _controller,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: liste.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 205,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF1A237E),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
                           ),
                         ),
-
-                        Row(
+                        child: Column(
                           children: [
-                            Spin(
-
-                              spins: 1,
-                              duration: Duration(milliseconds: 2000),
-                              child: Container(
-                                margin: EdgeInsets.only(left: 5, right: 5, top: 15),
-                                width: MediaQuery.of(context).size.width * .45,
-                                height: MediaQuery.of(context).size.height * .25 ,
-                                child: Card(
-                                  elevation: 2,
-
-                                  child: Column(
-                                    children: [
-                                       Image.asset(
-                                          "assets/images/imageMap/trouver.png",
-                                          width: 60,),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text(
-                                            "Pour que tu puisse trouver les auto-écoles les plus proches de votre adresse.",
-                                            style: TextStyle(
-                                                fontSize: 16, fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              child: const Text(
+                                "Cliquez pour trouver l'auto-école près de chez vous et réservez vos cours dès maintenant !",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.white),
                               ),
                             ),
-                            FadeInUp(
-                              duration: Duration(milliseconds: 2000),
-                              child: Container(
-
-                                margin: EdgeInsets.only( right: 5, top: 15),
-                                width: MediaQuery.of(context).size.width * .50,
-                                height: MediaQuery.of(context).size.height * .25 ,
-                                child: Card(
-                                  elevation: 2,
-                                  child: Column(
-                                    children: [
-                                       Image.asset(
-                                          "assets/images/imageMap/progression.png",
-                                          width: 60,
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text(
-                                            "Pour que tu puisse suivre ta progression en effectuant nos differents quiz",
-                                            style: TextStyle(
-                                                fontSize: 16, fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-
-                                    ],
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  margin: const EdgeInsets.only(top: 20),
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Icon(
+                                    Icons.fmd_good_outlined,
+                                    color: Colors.black,
                                   ),
                                 ),
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  margin: const EdgeInsets.only(top: 20),
+                                  height: 44,
+                                  width: MediaQuery.of(context).size.width * .7,
+                                  child: DropdownButton(
+                                    icon: Container(
+                                      margin: const EdgeInsets.only(left: 120),
+                                      //width: MediaQuery.of(context).size.width *.5,
+                                      alignment: Alignment.centerLeft,
+                                      child: const Icon(Icons.arrow_drop_down),
+                                    ),
+                                    value: _selectedRegion,
+                                    items: liste.map((e) {
+                                      return DropdownMenuItem(
+                                        value: e,
+                                        child: Text(e.quartier
+                                            as String),
+                                      );
+                                    }).toList(), onChanged: (Object? value) {  },
+                                    /*_regions.map((String value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),*/
+                                    /*onChanged: (value) {
+                  setState(() {
+                  _selectedRegion = value!;
+                  });
+                  },*/
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * .7,
+                              padding: const EdgeInsets.all(16.0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF6200EE)),
+                                child: const Text('Rechercher'),
+                                onPressed: () {
+                                  // handle search here
+                                  setState(() {
+                                    showWidget = false;
+                                  });
+                                },
                               ),
                             ),
                           ],
-                        )
-                      ],
-                    ),
-                  ] else ...[
-                    Container(
-                        child: Column(
-                      children: [
-                        Card(
-
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const DetailLieuxMap(),
+                        ),
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              if (showWidget) ...[
+                                Column(
+                                  children: <Widget>[
+                                    const Text(
+                                      "Pour quoi avons nous créé cette application ?",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    JelloIn(
+                                      duration: Duration(milliseconds: 5000),
+                                      child: Image.asset(
+                                        "assets/images/imageMap/image2.png",
+                                        width: 300,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Spin(
+                                          spins: 1,
+                                          duration:
+                                              Duration(milliseconds: 2000),
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                left: 5, right: 5, top: 15),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                .45,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                .25,
+                                            child: Card(
+                                              elevation: 2,
+                                              child: Column(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/images/imageMap/trouver.png",
+                                                    width: 60,
+                                                  ),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: Text(
+                                                      "Pour que tu puisse trouver les auto-écoles les plus proches de votre adresse.",
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        FadeInUp(
+                                          duration:
+                                              Duration(milliseconds: 2000),
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                right: 5, top: 15),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                .50,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                .25,
+                                            child: Card(
+                                              elevation: 2,
+                                              child: Column(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/images/imageMap/progression.png",
+                                                    width: 60,
+                                                  ),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: Text(
+                                                      "Pour que tu puisse suivre ta progression en effectuant nos differents quiz",
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
-                              );
-                            },
-                            child: ListTile(
-                              leading:CircularImage(radius:20, borderWidth:1,borderColor:Colors.white, source: 'assets/images/kanaga.jpg'),
-                              title: const Text(
-                                "Auto ecole Kanaga",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.justify,
-                              ),
-                              subtitle: Text('20 23 01 02 / 66 73 01 99'),
-                            ),
+                              ] else ...[
+                                Container(
+                                    child: Column(
+                                  children: [
+                                    Card(
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const DetailLieuxMap(),
+                                            ),
+                                          );
+                                        },
+                                        child: ListTile(
+                                          leading: CircularImage(
+                                              radius: 20,
+                                              borderWidth: 1,
+                                              borderColor: Colors.white,
+                                              source:
+                                                  'assets/images/kanaga.jpg'),
+                                          title: const Text(
+                                            "Auto ecole Kanaga",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                          subtitle:
+                                              Text('20 23 01 02 / 66 73 01 99'),
+                                        ),
+                                      ),
+                                    ),
+                                    Card(
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white),
+                                        onPressed: () {},
+                                        child: ListTile(
+                                          leading: CircularImage(
+                                            radius: 20,
+                                            borderWidth: 1,
+                                            borderColor: Colors.white,
+                                            source:
+                                                "assets/images/imageMap/progression.png",
+                                          ),
+                                          title: const Text(
+                                            "Auto ecole Tigana",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                          subtitle:
+                                              Text('76 55 23 23 / 63 63 63 51'),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ))
+                              ],
+                            ],
                           ),
                         ),
-
-                        Card(
-                          child: ElevatedButton(
-
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white),
-                            onPressed: () {  },
-                            child: ListTile(
-                              leading: CircularImage(
-                                radius:20, borderWidth:1,borderColor:Colors.white,
-                                source:"assets/images/imageMap/progression.png",
-
-
-                              ),
-                              title: const Text(
-                                "Auto ecole Tigana",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.justify,
-                              ),
-                              subtitle: Text('76 55 23 23 / 63 63 63 51'),
-                            ),
-                          ),
-                        )
-                      ],
-                    ))
-                  ],
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-      /*floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+                      )
+                    ],
+                  );
+                },
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        )
+        /*floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (controlleraudio.value.isPlaying) {
@@ -371,6 +447,6 @@ class _localisationState extends State<localisation> {
             ? Icons.pause
             : Icons.play_arrow),
       ),*/
-    );
+        );
   }
 }

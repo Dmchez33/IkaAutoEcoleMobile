@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 // import 'package:latlong2/latlong.dart' as LatLng;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Pages/Compte/Connexion.dart';
 import 'Pages/HomePage.dart';
 import 'Pages/carousel.dart';
+import 'Provider/AutoecoleDataProvider.dart';
 
 
 
@@ -132,22 +134,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: _title,
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-      ),
-      home:FutureBuilder(
-        future: _checkUser(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            return snapshot.data;
-          }
-          return CircularProgressIndicator();
-        },
-      ),
+    return ChangeNotifierProvider<AutoecoleDataProvider>(
+      create: (context) => AutoecoleDataProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: _title,
+        theme: ThemeData(
+          fontFamily: 'Poppins',
+        ),
+        home:FutureBuilder(
+          future: _checkUser(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              return snapshot.data;
+            }
+            return CircularProgressIndicator();
+          },
+        ),
 
+      ),
     );
   }
   Future<Widget> _checkUser() async {

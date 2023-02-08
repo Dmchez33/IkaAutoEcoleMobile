@@ -79,6 +79,9 @@ dependencies:
 
   motion_toast: ^2.6.4
 
+  #DEPENDANCE POUR LE PROVIDER
+  provider: ^6.0.5
+
 
 
 dev_dependencies:

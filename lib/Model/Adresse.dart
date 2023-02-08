@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Adresses {
   int? id;
   String? longitude;
@@ -37,4 +39,5 @@ class Adresses {
     data['autoecole'] = this.autoecole;
     return data;
   }
+
 }
