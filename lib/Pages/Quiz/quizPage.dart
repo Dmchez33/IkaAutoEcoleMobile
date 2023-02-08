@@ -187,3 +187,146 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }*/
+
+
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+
+import '../Compte/StatisticPage.dart';
+import 'package:flutter/material.dart';
+
+class QuizPage extends StatefulWidget {
+  @override
+  _QuizPageState createState() => _QuizPageState();
+}
+
+class _QuizPageState extends State<QuizPage> {
+  int currentQuestion = 0;
+  int score = 0;
+  final Map<int, Map<String, Object>> quizData = {
+    0: {
+      'question': 'What is Flutter?',
+      'options': ['A framework', 'A library', 'A programming language', 'An operating system'],
+      'answer': 0,
+    },
+    1: {
+      'question': 'What is Dart?',
+      'options': ['A framework', 'A library', 'A programming language', 'An operating system'],
+      'answer': 2,
+    },
+    2: {
+      'question': 'What is the use of Flutter?',
+      'options': ['Web development', 'Desktop development', 'Mobile development', 'All of the above'],
+      'answer': 3,
+    },
+  };
+
+  List<bool> answers = [false, false, false, false];
+
+  void checkAnswer(int index) {
+    setState(() {
+      answers = [false, false, false, false];
+      answers[index] = true;
+      if (index == quizData[currentQuestion]!['answer']) {
+        score++;
+      }
+    });
+  }
+
+  void nextQuestion() {
+    setState(() {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        answers = [false, false, false, false];
+      } else {
+        // show dialog with score
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Score'),
+            content: Text('Your score is $score out of ${quizData.length}'),
+            actions: [
+              ElevatedButton(
+                child: Text('Retake Quiz'),
+                onPressed: () {
+                  setState(() {
+                    currentQuestion = 0;
+                    score = 0;
+                    answers = [false, false, false, false];
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
+              ElevatedButton(
+                child: Text('Statistics'),
+                onPressed: () {
+                  // navigate to statistics page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => StatisticsPage(score: score, totalquestion: quizData.length),
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        },
+        );
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Quiz'),
+      ),
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(16.0),
+            child: LinearProgressIndicator(
+              value: (currentQuestion + 1) / quizData.length,
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Text(
+                    quizData[currentQuestion]!['question'] as String,
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                  SizedBox(height: 16.0),
+                  ...( quizData[currentQuestion]!['options'] as List<String>)
+                      !.asMap()
+                      .entries
+                      .map((entry) => Container(
+                    child: MaterialButton(
+                      onPressed: () => checkAnswer(entry.key),
+                      color: answers[entry.key] ? Colors.green : null,
+                      child: Text(
+                        entry.value,
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    ),
+                  ))
+                      .toList(),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: currentQuestion == quizData.length - 1
+            ? Text('Submit')
+            : Icon(Icons.arrow_forward),
+        onPressed: nextQuestion,
+      ),
+    );
+  }
+}

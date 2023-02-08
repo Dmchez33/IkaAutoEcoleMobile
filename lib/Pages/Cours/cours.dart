@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Compte/Connexion.dart';
 import '../Compte/compte.dart';
+import '../utilities/keys.dart';
 import 'DetailCours.dart';
 
 class cours extends StatefulWidget {
@@ -53,6 +54,7 @@ class _coursState extends State<cours> {
   void initState() {
     super.initState();
     checkLoginStatus();
+    playAudioWelCome = false;
   }
 
   checkLoginStatus() async {

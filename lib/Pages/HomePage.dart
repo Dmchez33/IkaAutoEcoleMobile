@@ -16,6 +16,7 @@ import '/Pages/Cours/coursePage.dart';
 import '/Pages/Quiz/Question.dart';
 import '/Pages/Quiz/SeletedQuestionPage.dart';
 import 'Compte/Connexion.dart';
+import 'Compte/StatisticPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -30,7 +31,8 @@ class _MainPageState extends State<MainPage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
     const localisation(),
-    cours(),
+    //cours(),
+    QuizPage(),
     //QuestionsScreen(),
     QuizSelectionPage(
       quizTypes: {
@@ -77,7 +79,7 @@ class _MainPageState extends State<MainPage> {
       },
     ),
 
-    const video(),
+    YoutubePlayerDemoApp(),
   ];
 
   void _onItemTapped(int index) {
@@ -135,7 +137,7 @@ class _MainPageState extends State<MainPage> {
                 backgroundColor: Color(0xFF1A237E),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.ondemand_video),
+                icon: Icon(Icons.video_library),
                 label: 'Vidéos',
                 backgroundColor: Color(0xFF1A237E),
               ),
@@ -143,7 +145,7 @@ class _MainPageState extends State<MainPage> {
             currentIndex: _selectedIndex,
             showSelectedLabels: true,
             showUnselectedLabels: false,
-            selectedItemColor: Colors.amber[800],
+            selectedItemColor: Colors.white,
             onTap: _onItemTapped,
           ),
         ));

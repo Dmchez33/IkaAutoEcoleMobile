@@ -1,17 +1,19 @@
-import 'package:animated_icon_button/animated_icon_button.dart';
+
+import 'package:audioplayer/audioplayer.dart';
 import 'package:circular_image/circular_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter_animated_button/flutter_animated_button.dart';
+import 'package:ika_auto_ecole/Model/AutoEcole.dart';
 import 'package:ika_auto_ecole/Pages/map/DetailLieuxMap.dart';
-import 'package:ika_auto_ecole/Pages/map/listeLieux.dart';
-import 'package:select_searchable_list/select_searchable_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_player/video_player.dart';
 
 import '../Compte/Connexion.dart';
 import '../Compte/compte.dart';
+import 'package:animate_do/animate_do.dart';
+import 'package:flutter/services.dart';
 
+import '../utilities/keys.dart';
 class localisation extends StatefulWidget {
   const localisation({Key? key}) : super(key: key);
 
@@ -21,6 +23,7 @@ class localisation extends StatefulWidget {
 
 class _localisationState extends State<localisation> {
   late String _selectedRegion = 'Badalabougou';
+  late List<AutoEcole> _autoEcoles;
   List<String> _regions = [
     'Badalabougou',
     'Niamana',
@@ -33,11 +36,45 @@ class _localisationState extends State<localisation> {
   bool isLoggedIn = false;
   bool showWidget = true;
 
+  // DEBUT POUR L'AUDIO DE BIENVENU
+  late VideoPlayerController controlleraudio;
+  loadAudioPlayer() {
+    controlleraudio = VideoPlayerController.asset(
+        'assets/audio/bienvenu.mp3');
+    controlleraudio.addListener(() {
+      setState(() {});
+    });
+    controlleraudio.initialize().then((value) {
+      setState(() {});
+    });
+
+
+
+  }
+  // FIN POUR L'AUDIO
+
+  AudioPlayer _audioPlayer = AudioPlayer();
   @override
   void initState() {
     super.initState();
     checkLoginStatus();
     showWidget = true;
+    print("bonjour");
+    getAllAutoEcole().then((autoEcoles) {
+      setState(() {
+        _autoEcoles = autoEcoles;
+      });
+    });
+    //POUR AUDIO
+    print("auo ${_autoEcoles}");
+    if(playAudioWelCome){
+      loadAudioPlayer();
+      super.initState();
+      controlleraudio.play();
+      playAudioWelCome = false;
+    }
+
+    //_audioPlayer.play("assets/audio/bienvenu.mp3");
   }
 
   checkLoginStatus() async {
@@ -50,9 +87,15 @@ class _localisationState extends State<localisation> {
           (Route<dynamic> route) => false);
     }
   }
-
+  bool _played = false;
   @override
   Widget build(BuildContext context) {
+    /*if (!_played) {
+      _played = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controlleraudio.play();
+      });
+    }*/
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -66,6 +109,7 @@ class _localisationState extends State<localisation> {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (BuildContext context) => compte()),
               );
+              
             },
             child: const CircleAvatar(
               backgroundColor: Colors.white,
@@ -81,12 +125,12 @@ class _localisationState extends State<localisation> {
         children: [
           Container(
             width: double.infinity,
-            height: 250,
+            height: 205,
             decoration: const BoxDecoration(
               color: Color(0xFF1A237E),
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
               ),
             ),
             child: Column(
@@ -175,36 +219,79 @@ class _localisationState extends State<localisation> {
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        Container(
+                        JelloIn(
+                          duration: Duration(milliseconds: 5000),
+
                           child: Image.asset(
                             "assets/images/imageMap/image2.png",
                             width: 300,
                           ),
                         ),
-                        ListTile(
-                          leading: Image.asset(
-                            "assets/images/imageMap/trouver.png",
-                            width: 60,
-                          ),
-                          title: const Text(
-                            "Pour que tu puisse trouver les auto-écoles les plus proches de votre adresse.",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.justify,
-                          ),
-                        ),
-                        ListTile(
-                          trailing: Image.asset(
-                            "assets/images/imageMap/progression.png",
-                            width: 60,
-                          ),
-                          title: const Text(
-                            "Pour que tu puisse suivre ta progression en effectuant nos differents quiz",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.justify,
-                          ),
-                        ),
+
+                        Row(
+                          children: [
+                            Spin(
+
+                              spins: 1,
+                              duration: Duration(milliseconds: 2000),
+                              child: Container(
+                                margin: EdgeInsets.only(left: 5, right: 5, top: 15),
+                                width: MediaQuery.of(context).size.width * .45,
+                                height: MediaQuery.of(context).size.height * .25 ,
+                                child: Card(
+                                  elevation: 2,
+
+                                  child: Column(
+                                    children: [
+                                       Image.asset(
+                                          "assets/images/imageMap/trouver.png",
+                                          width: 60,),
+                                        const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Pour que tu puisse trouver les auto-écoles les plus proches de votre adresse.",
+                                            style: TextStyle(
+                                                fontSize: 16, fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            FadeInUp(
+                              duration: Duration(milliseconds: 2000),
+                              child: Container(
+
+                                margin: EdgeInsets.only( right: 5, top: 15),
+                                width: MediaQuery.of(context).size.width * .50,
+                                height: MediaQuery.of(context).size.height * .25 ,
+                                child: Card(
+                                  elevation: 2,
+                                  child: Column(
+                                    children: [
+                                       Image.asset(
+                                          "assets/images/imageMap/progression.png",
+                                          width: 60,
+                                        ),
+                                        const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Pour que tu puisse suivre ta progression en effectuant nos differents quiz",
+                                            style: TextStyle(
+                                                fontSize: 16, fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ] else ...[
@@ -225,7 +312,7 @@ class _localisationState extends State<localisation> {
                               );
                             },
                             child: ListTile(
-                              leading:CircularImage(radius:20, borderWidth:1,borderColor:Colors.white, source: 'assets/images/imageMap/progression.png'),
+                              leading:CircularImage(radius:20, borderWidth:1,borderColor:Colors.white, source: 'assets/images/kanaga.jpg'),
                               title: const Text(
                                 "Auto ecole Kanaga",
                                 style: TextStyle(
@@ -236,7 +323,7 @@ class _localisationState extends State<localisation> {
                             ),
                           ),
                         ),
-                        
+
                         Card(
                           child: ElevatedButton(
 
@@ -269,6 +356,21 @@ class _localisationState extends State<localisation> {
           )
         ],
       ),
+      /*floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (controlleraudio.value.isPlaying) {
+            controlleraudio.pause();
+          } else {
+            controlleraudio.play();
+          }
+          setState(() {});
+
+        },
+        child: Icon(controlleraudio.value.isPlaying
+            ? Icons.pause
+            : Icons.play_arrow),
+      ),*/
     );
   }
 }

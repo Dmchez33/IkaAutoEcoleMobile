@@ -75,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLoading = false;
       });
+      sharedPreferences.setBool("isLoggedIn", false);
       print(response.body);
     }
   }
@@ -152,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
         child: Column(
           children: [
-            Image.asset("assets/images/connexion_autoEcole.png"),
+            Image.asset("assets/logo/Logo (1).png"),
             const Text(
               "Connexion",
               style: TextStyle(

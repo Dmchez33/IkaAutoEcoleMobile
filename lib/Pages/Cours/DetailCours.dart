@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 import '../Compte/compte.dart';
+import '../utilities/keys.dart';
 
 class DetailCoursPage extends StatefulWidget {
   const DetailCoursPage({Key? key}) : super(key: key);
@@ -23,7 +24,12 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
     loadVideoPlayer();
     loadAudioPlayer();
     super.initState();
+
+    playAudioWelCome = false;
+
   }
+
+
 
   loadVideoPlayer() {
     controller = VideoPlayerController.asset(

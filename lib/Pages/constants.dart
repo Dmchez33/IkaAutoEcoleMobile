@@ -9,6 +9,7 @@ const Color incorrect = Color(0xFFAB3232);
 // set a neutral color
 // not going to take pure white because it hurts eyes.
 const Color neutral = Color(0xFFE7E7E7);
+const Color button = Color(0xFF6200EE);
 // set some background color
 const Color background = Color(0xFF1A3464);
 const String googleAPIKey = 'AIzaSyCGShAceyIm1LHL2mLja@eKCKDjoZV2RzY';

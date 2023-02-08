@@ -9,14 +9,14 @@ class NextButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: neutral,
+        color: button,
         borderRadius: BorderRadius.circular(10.0),
       ),
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: const Text(
-        'Next Question',
+        'Question suivant',
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 18.0),
+        style: TextStyle(fontSize: 18.0,color: Colors.white),
       ),
     );
   }

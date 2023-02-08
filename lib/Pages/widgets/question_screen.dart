@@ -27,7 +27,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           'Arrêt non authorisé': true,
           'S\'arrêter quand on veut': false,
           'Se tenir debout sur sa moto': false,
-        }, title: ''),
+        }, title: "Laquelle de ces asertions est une infraction?"),
     Question(id: 2,
         question: "Laquelle de ces asertions est une infraction?",
         options: {
@@ -35,7 +35,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           'Arrêt non': false,
           'S\'arrêter on veut': false,
           'Se tenir debout sur moto': false,
-        }, title: ''),
+        }, title: "Laquelle de ces asertions est une infraction?"),
     Question(id: 3,
         question: "Laquelle de ces asertions est une infraction?",
         options: {
@@ -43,7 +43,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           'Authorisé': false,
           'Quand on veut': false,
           'Debout sur sa moto': true,
-        }, title: ''),
+        }, title: "Laquelle de ces asertions est une infraction?"),
     Question(id: 4,
         question: "Laquelle de ces asertions est une infraction?",
         options: {
@@ -59,7 +59,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           'Arrêt non authorisé': true,
           'S\'arrêter quand on veut': false,
           'Se tenir debout sur sa moto': false,
-        }, title: ''),
+        }, title: "Infraction?"),
     Question(id: 6,
         question: "Est-ce une infraction?",
         options: {
@@ -67,7 +67,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           'Arrêt non': false,
           'S\'arrêter on veut': false,
           'Se tenir debout sur moto': false,
-        }, title: ''),
+        }, title: "Est-ce une infraction?"),
     Question(id: 7,
         question: "Choisis la bonne infraction?",
         options: {
@@ -75,7 +75,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           'Authorisé': false,
           'Quand on veut': false,
           'Debout sur sa moto': true,
-        }, title: ''),
+        }, title: "Choisis la bonne infraction?"),
     Question(id: 8,
         question: "Une infraction?",
         options: {
@@ -83,7 +83,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           'Arrêt': false,
           'S\'arrêter veut': true,
           'Se moto': false,
-        }, title: '')
+        }, title: "Une infraction?")
   ];
 
   int index = 0;
@@ -228,8 +228,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
               // add the questionWIdget here
               QuestionWidget(
                 indexAction: index, // currently at 0.
-                question: _questions[index]
-                    .question, // means the first question in the list.
+                question: _questions[index].title, // means the first question in the list.
                 totalQuestions:
                 _questions.length, // total length of the list
               ),
