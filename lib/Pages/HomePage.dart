@@ -31,8 +31,8 @@ class _MainPageState extends State<MainPage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
     const localisation(),
-    //cours(),
-    QuizPage(),
+    cours(),
+    //QuizPage(),
     //QuestionsScreen(),
     QuizSelectionPage(
       quizTypes: {
@@ -131,6 +131,7 @@ class _MainPageState extends State<MainPage> {
                 label: 'Cours',
                 backgroundColor: Color(0xFF1A237E),
               ),
+
               BottomNavigationBarItem(
                 icon: Icon(Icons.school),
                 label: 'Quiz',
