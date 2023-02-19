@@ -1,12 +1,20 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:ika_auto_ecole/Model/Panneaux.dart';
+import 'package:ika_auto_ecole/Model/TypePanneaux.dart';
 
 import '../Model/Adresse.dart';
 import '../Model/AutoEcole.dart';
 
 class AutoecoleDataProvider with ChangeNotifier {
   List<AutoEcole> _autoecoles = [];
+
   List<Adresses> adresses = [];
+
+  List<PanneauDeConduite> panneauDeConduite = [];
+
+  List<TypePanneaux> typePanneaux = [];
+
 /*List<Adresses> get adresses => _adresses;
 
  List<AutoEcole> get autoecoles => _autoecoles;

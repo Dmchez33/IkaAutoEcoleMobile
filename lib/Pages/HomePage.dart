@@ -17,6 +17,7 @@ import '/Pages/Quiz/Question.dart';
 import '/Pages/Quiz/SeletedQuestionPage.dart';
 import 'Compte/Connexion.dart';
 import 'Compte/StatisticPage.dart';
+import 'Panneaux/PanneauxPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -32,6 +33,7 @@ class _MainPageState extends State<MainPage> {
   static final List<Widget> _widgetOptions = <Widget>[
     const localisation(),
     cours(),
+    Panneaux(),
     //QuizPage(),
     //QuestionsScreen(),
     QuizSelectionPage(
@@ -120,7 +122,7 @@ class _MainPageState extends State<MainPage> {
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           child: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
+            items:  <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Accueil',
@@ -131,7 +133,11 @@ class _MainPageState extends State<MainPage> {
                 label: 'Cours',
                 backgroundColor: Color(0xFF1A237E),
               ),
-
+              BottomNavigationBarItem(
+                icon: Image.asset("assets/logo/panneaux.png",width: 30,),
+                label: 'Panneaux',
+                backgroundColor: Color(0xFF1A237E),
+              ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.school),
                 label: 'Quiz',

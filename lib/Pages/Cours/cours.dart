@@ -2,7 +2,11 @@ import 'dart:convert';
 
 import 'package:banner_carousel/banner_carousel.dart';
 import 'package:flutter/material.dart';
+import 'package:ika_auto_ecole/Model/Panneaux.dart';
 import 'package:ika_auto_ecole/Pages/Cours/ListeCoursParContenu.dart';
+import 'package:ika_auto_ecole/Provider/AutoecoleDataProvider.dart';
+import 'package:ika_auto_ecole/Service/PanneauxService.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Compte/Connexion.dart';
@@ -54,8 +58,13 @@ class _coursState extends State<cours> {
   void initState() {
     super.initState();
     checkLoginStatus();
+    getAllCours();
     playAudioWelCome = false;
   }
+
+  //LES ELEMENTS DU COURS
+  PanneauxService panneauxService = PanneauxService();
+  List<PanneauDeConduite>? panneaux;
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -75,6 +84,15 @@ class _coursState extends State<cours> {
           (Route<dynamic> route) => false);
     }
   }
+
+  getAllCours() async{
+    panneaux = await panneauxService.getAllPanneaux();
+    Provider.of<AutoecoleDataProvider>(context,listen: false).panneauDeConduite = panneaux!;
+    setState(() {
+
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {

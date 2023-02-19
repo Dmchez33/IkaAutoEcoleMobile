@@ -31,8 +31,11 @@ class _localisationState extends State<localisation> {
 
   //Future<List<AutoEcole>> _autoEcoles = [];
 
+  //POUR L'ADRESSE
   AdresseService adresses = AdresseService();
   List<Adresses>? adresse;
+
+
   List<String> _regions = [
     'Badalabougou',
     'Niamana',
