@@ -7,6 +7,8 @@ class Question {
   // every question will have a title, it's the question itself.
   final String title;
   // every question will have options.
+
+  final String image;
   final Map<String, bool> options;
   // options will be like - {'1':true, '2':false} = something like these
 
@@ -14,7 +16,9 @@ class Question {
   Question({
     required this.id,
     required this.title,
-    required this.options, required String question,
+    required this.image,
+    required this.options,
+    required String question,
   });
 
   get question => title;

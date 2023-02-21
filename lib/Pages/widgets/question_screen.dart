@@ -22,6 +22,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
   final List<Question> _questions = [
     Question(id: 1,
         question: "Laquelle de ces asertions est une infraction?",
+        image: "assets/images/imageMap/image2.png",
         options: {
           'Manger dans sa voiture': false,
           'Arrêt non authorisé': true,
@@ -30,6 +31,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
         }, title: "Laquelle de ces asertions est une infraction?"),
     Question(id: 2,
         question: "Laquelle de ces asertions est une infraction?",
+        image: "assets/images/imageMap/image2.png",
         options: {
           'Dans sa voiture': true,
           'Arrêt non': false,
@@ -38,6 +40,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
         }, title: "Laquelle de ces asertions est une infraction?"),
     Question(id: 3,
         question: "Laquelle de ces asertions est une infraction?",
+        image: "assets/images/imageMap/image2.png",
         options: {
           'Manger': false,
           'Authorisé': false,
@@ -46,6 +49,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
         }, title: "Laquelle de ces asertions est une infraction?"),
     Question(id: 4,
         question: "Laquelle de ces asertions est une infraction?",
+        image: "assets/images/imageMap/image2.png",
         options: {
           'Sa voiture': false,
           'Arrêt': false,
@@ -54,6 +58,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
         }, title: ''),
     Question(id: 5,
         question: "Infraction?",
+        image: "assets/images/imageMap/image2.png",
         options: {
           'Manger dans sa voiture': false,
           'Arrêt non authorisé': true,
@@ -62,6 +67,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
         }, title: "Infraction?"),
     Question(id: 6,
         question: "Est-ce une infraction?",
+        image: "assets/images/imageMap/image2.png",
         options: {
           'Dans sa voiture': true,
           'Arrêt non': false,
@@ -70,6 +76,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
         }, title: "Est-ce une infraction?"),
     Question(id: 7,
         question: "Choisis la bonne infraction?",
+        image: "assets/images/imageMap/image2.png",
         options: {
           'Manger': false,
           'Authorisé': false,
@@ -78,6 +85,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
         }, title: "Choisis la bonne infraction?"),
     Question(id: 8,
         question: "Une infraction?",
+        image: "assets/images/imageMap/image2.png",
         options: {
           'Sa voiture': false,
           'Arrêt': false,
@@ -227,7 +235,8 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
             children: [
               // add the questionWIdget here
               QuestionWidget(
-                indexAction: index, // currently at 0.
+                indexAction: index,
+                image: _questions[index].image,// currently at 0.
                 question: _questions[index].title, // means the first question in the list.
                 totalQuestions:
                 _questions.length, // total length of the list
