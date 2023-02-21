@@ -55,7 +55,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           'Déviation': false,
           'Emplacement d\'arrçet d\'urgence': true,
           'Couloir de bus': false,
-        }, title: ''),
+        }, title: 'Que signifie ce panneau ?'),
     Question(id: 5,
         question: "Que veut dire ce panneau?",
         image: "assets/images/imageMap/question5.png",

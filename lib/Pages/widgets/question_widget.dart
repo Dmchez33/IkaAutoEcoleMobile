@@ -23,6 +23,7 @@ class QuestionWidget extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             '$question',
+            textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 18.0,
               color: background,
