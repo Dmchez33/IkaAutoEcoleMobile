@@ -29,8 +29,8 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
   late String lienaudio ='';
 
   loadAudioPlayer() {
-    controlleraudio = VideoPlayerController.network(
-        lienaudio);
+    controlleraudio = VideoPlayerController.asset(
+        "${panneaux[_selectedIndex].vocal}");
     print(lienaudio);
     controlleraudio.addListener(() {
       setState(() {});
@@ -53,6 +53,7 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
   getAllPanneauxByType() async {
     panneaux =
         await panneauxService.getAllPanneauxByType(widget.nomTypePanneaux);
+
     Provider.of<AutoecoleDataProvider>(context, listen: false)
         .panneauDeConduite = panneaux!;
     setState(() {});
@@ -96,8 +97,8 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
                   GestureDetector(
                     onTap: () {
                       //await flutterTts.speak("${panneaux![i].vocal}"); // Lire le champ vocal
-                      lienaudio = "${panneaux![i].vocal}";
-                      //print(lienaudio);
+
+
                       if (controlleraudio.value.isPlaying) {
                         controlleraudio.pause();
                       } else {
