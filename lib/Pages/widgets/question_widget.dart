@@ -22,16 +22,16 @@ class QuestionWidget extends StatelessWidget {
         Container(
           alignment: Alignment.centerLeft,
           child: Text(
-            'Question ${indexAction + 1}/$totalQuestions: $question',
+            '$question',
             style: const TextStyle(
-              fontSize: 24.0,
+              fontSize: 18.0,
               color: background,
             ),
           ),
         ),
         Container(
           alignment: Alignment.center,
-          child: Image.asset(image),
+          child: Image.asset(image,width: 200,),
         )
       ],
     );

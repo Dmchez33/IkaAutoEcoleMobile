@@ -266,7 +266,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
                 ),
               Expanded(
                 child: Align(
-                  alignment: FractionalOffset.bottomCenter,
+                  //alignment: FractionalOffset.bottomCenter,
                   child: GestureDetector(
                     onTap: () => nextQuestion(_questions.length),
                     child: const Padding(
