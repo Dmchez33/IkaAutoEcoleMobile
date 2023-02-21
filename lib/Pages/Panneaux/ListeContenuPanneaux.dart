@@ -29,8 +29,9 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
   late String lienaudio ='';
 
   loadAudioPlayer() {
+
     controlleraudio = VideoPlayerController.asset(
-        "${panneaux[_selectedIndex].vocal}");
+        lienaudio);
     print(lienaudio);
     controlleraudio.addListener(() {
       setState(() {});
