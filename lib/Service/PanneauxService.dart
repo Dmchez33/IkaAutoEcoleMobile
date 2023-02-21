@@ -41,7 +41,7 @@ class PanneauxService{
 
     print("getpanneauxParType: ${response.body}");
     if (response.statusCode == 200) {
-      final List<dynamic> jsonResponse = json.decode(response.body);
+      final List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       return jsonResponse.map((panneaux) => PanneauDeConduite.fromJson(panneaux)).toList();
     } else {
       throw Exception('Failed to retrieve AutoEcole');

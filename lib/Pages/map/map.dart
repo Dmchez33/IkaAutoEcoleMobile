@@ -1,5 +1,6 @@
 import 'package:audioplayer/audioplayer.dart';
 import 'package:circular_image/circular_image.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ika_auto_ecole/Model/Adresse.dart';
@@ -34,6 +35,7 @@ class _localisationState extends State<localisation> {
   //POUR L'ADRESSE
   AdresseService adresses = AdresseService();
   List<Adresses>? adresse;
+  Adresses? adres;
 
 
   List<String> _regions = [
@@ -121,11 +123,11 @@ class _localisationState extends State<localisation> {
           actions: <Widget>[
             ElevatedButton(
               style:
-                  ElevatedButton.styleFrom(backgroundColor: Color(0xFF1A237E)),
+                  ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1A237E)),
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (BuildContext context) => compte()),
+                      builder: (BuildContext context) => const compte()),
                 );
               },
               child: const CircleAvatar(
@@ -170,6 +172,42 @@ class _localisationState extends State<localisation> {
                           color: Colors.white,
                         ),
                         margin: const EdgeInsets.only(top: 20),
+                        height: 44,
+                        width: MediaQuery.of(context).size.width * .7,
+                        child: Consumer<AutoecoleDataProvider>(
+                          builder: (context, AutoecoleDataProvider, child) => DropdownSearch<Adresses>(
+                           // mode: Mode.MENU,
+                            selectedItem: adres,
+                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                icon: Icon( Icons.fmd_good_outlined),
+                                //labelText: "Selectionner un quartier",
+                                //hintText: "Select an Int",
+                              ),
+                            ),
+                            //label: "Sélectionnez une adresse",
+                            //hint: "Sélectionnez une adresse",
+                            items: AutoecoleDataProvider.adresses,
+                            itemAsString: (Adresses adresse) => adresse.quartier!,
+                            onChanged: (value) {
+                              setState(() {
+                                print(value);
+                                adres = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  /*Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        margin: const EdgeInsets.only(top: 20),
                         padding: const EdgeInsets.all(10),
                         child: const Icon(
                           Icons.fmd_good_outlined,
@@ -206,32 +244,9 @@ class _localisationState extends State<localisation> {
                             },
                           ),
                         ),
-
-
-
-                        /*DropdownButton(
-                          icon: Container(
-                            margin: const EdgeInsets.only(left: 120),
-                            //width: MediaQuery.of(context).size.width *.5,
-                            alignment: Alignment.centerLeft,
-                            child: const Icon(Icons.arrow_drop_down),
-                          ),
-                          value: _selectedRegion,
-                          items: _regions.map((String value) {
-                            return DropdownMenuItem(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedRegion = value!;
-                            });
-                          },
-                        ),*/
                       ),
                     ],
-                  ),
+                  ),*/
                   Container(
                     width: MediaQuery.of(context).size.width * .7,
                     padding: const EdgeInsets.all(16.0),
@@ -263,7 +278,7 @@ class _localisationState extends State<localisation> {
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           JelloIn(
-                            duration: Duration(milliseconds: 5000),
+                            duration: const Duration(milliseconds: 5000),
                             child: Image.asset(
                               "assets/images/imageMap/image2.png",
                               width: 300,
@@ -273,9 +288,9 @@ class _localisationState extends State<localisation> {
                             children: [
                               Spin(
                                 spins: 1,
-                                duration: Duration(milliseconds: 2000),
+                                duration: const Duration(milliseconds: 2000),
                                 child: Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       left: 5, right: 5, top: 15),
                                   width:
                                       MediaQuery.of(context).size.width * .45,
@@ -305,9 +320,9 @@ class _localisationState extends State<localisation> {
                                 ),
                               ),
                               FadeInUp(
-                                duration: Duration(milliseconds: 2000),
+                                duration: const Duration(milliseconds: 2000),
                                 child: Container(
-                                  margin: EdgeInsets.only(right: 5, top: 15),
+                                  margin: const EdgeInsets.only(right: 5, top: 15),
                                   width:
                                       MediaQuery.of(context).size.width * .50,
                                   height:
@@ -374,7 +389,7 @@ class _localisationState extends State<localisation> {
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.justify,
                                 ),
-                                subtitle: Text('20 23 01 02 / 66 73 01 99'),
+                                subtitle: const Text('20 23 01 02 / 66 73 01 99'),
                               ),
                             ),
                           ),
@@ -398,7 +413,7 @@ class _localisationState extends State<localisation> {
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.justify,
                                 ),
-                                subtitle: Text('76 55 23 23 / 63 63 63 51'),
+                                subtitle: const Text('76 55 23 23 / 63 63 63 51'),
                               ),
                             ),
                           )

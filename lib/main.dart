@@ -139,9 +139,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: _title,
-        theme: ThemeData(
-          fontFamily: 'Poppins',
-        ),
+          theme: ThemeData(
+            fontFamily: 'Roboto',
+            // autres propriétés du thème
+          ),
         home:FutureBuilder(
           future: _checkUser(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {

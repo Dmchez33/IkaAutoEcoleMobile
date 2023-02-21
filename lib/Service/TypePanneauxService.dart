@@ -21,7 +21,7 @@ class TypePanneauxService{
 
     print("courspanneux: ${response.body}");
     if (response.statusCode == 200) {
-      final List<dynamic> jsonResponse = json.decode(response.body);
+      final List<dynamic> jsonResponse = json.decode( utf8.decode(response.bodyBytes));
       return jsonResponse.map((typepanneaux) => TypePanneaux.fromJson(typepanneaux)).toList();
     } else {
       throw Exception('Failed to retrieve AutoEcole');
