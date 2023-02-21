@@ -64,7 +64,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           'Priorité à droite à la prochaine intersection': true,
           'Arrêt à la prochaine intersection': false,
           'Priorité ponctuelle': false,
-        }, title: "Infraction?"),
+        }, title: "Que veut dire ce panneau?"),
     Question(id: 6,
         question: "Que peut on rencontrer à l'approche de ce panneau?",
         image: "assets/images/imageMap/question6.png",
@@ -73,7 +73,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           'Des pluies verglassâtes': false,
           'Du brouillard ou de la fumée': true,
           'Un passage piéton': false,
-        }, title: "Est-ce une infraction?"),
+        }, title: "Que peut on rencontrer à l'approche de ce panneau?"),
     Question(id: 7,
         question: "Qui est interdit de circuler après ce panneau ?",
         image: "assets/images/imageMap/question7.png",
@@ -82,7 +82,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           'Les vélos': false,
           'Les scooters': false,
           'Tout le monde peut circuler': true,
-        }, title: "Choisis la bonne infraction?"),
+        }, title: "Qui est interdit de circuler après ce panneau ?"),
     Question(id: 8,
         question: "En ville, un panneau de danger est indiqué à quelle distance du lieu ?",
         image: "assets/images/imageMap/question8.png",
@@ -91,7 +91,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           '50m': true,
           '150m': false,
           '500m': false,
-        }, title: "Une infraction?")
+        }, title: "En ville, un panneau de danger est indiqué à quelle distance du lieu ?")
   ];
 
   int index = 0;
