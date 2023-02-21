@@ -350,13 +350,8 @@ class _localisationState extends State<localisation> {
                                   ),
                                 ),
                               ),
-                              
-
                             ],
                           ),
-                          Container(
-                            child: Text("${adresse?.length}"),
-                          )
                         ],
                       ),
                     ] else ...[

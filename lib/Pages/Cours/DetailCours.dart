@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 import '../Compte/compte.dart';
+import '../Quiz/SeletedQuestionPage.dart';
 import '../utilities/keys.dart';
 
 class DetailCoursPage extends StatefulWidget {
@@ -67,13 +68,23 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
         child: Column(
           children: [
             Container(
+              height: 70,
+              width: MediaQuery.of(context).size.width,
+              child: ClipPath(
+                clipper: BottomArcClipper(),
+                child: Container(
+                  color: Color(0xFF1A237E),
+                ),
+              ),
+            ),
+            /*Container(
               width: double.infinity,
               //height: MediaQuery.of(context).size.height * 0.15,
               child: Image.asset(
                 'assets/cours/image1.png',
                 fit: BoxFit.fill,
               ),
-            ),
+            ),*/
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -84,18 +95,18 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
                       child: Column(
                         children: [
                           //ECRAN OU ON PEUT VISUALISER LA VIDEO
-                          AspectRatio(
+                          /*AspectRatio(
                             aspectRatio: controller.value.aspectRatio,
                             child: VideoPlayer(controller),
-                          ),
+                          ),*/
 
                           //INDICATEUR DE LA progression de la video
-                          Container(
+                          /*Container(
                               child: VideoProgressIndicator(controller,
                                   allowScrubbing: false,
-                                  colors: const VideoProgressColors())),
+                                  colors: const VideoProgressColors())),*/
                           //CONTENEUR CONTENANT LE BUTTON PLAY PAUSE  DE LA VIDEO
-                          Container(
+                          /*Container(
                             child: Row(
                               children: [
                                 IconButton(
@@ -120,7 +131,7 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
                                     icon: Icon(Icons.stop))
                               ],
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
@@ -135,7 +146,7 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
                           margin: const EdgeInsets.only(right: 20,left: 20),
                           child: Image.asset(
                             "assets/images/imagecours/notion_theorie.png",
-                            //width: MediaQuery.of(context).size.width * .4,
+                            height: MediaQuery.of(context).size.width * .5,
                             fit: BoxFit.fill,
                             //height: MediaQuery.of(context).size.height,
                           ),

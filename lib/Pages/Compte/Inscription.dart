@@ -48,10 +48,10 @@ class _IncriptionState extends State<Incription> {
         if (response.statusCode == 200) {
           // Afficher un message de réussite ou rediriger l'utilisateur vers une autre page.
           print("donner envoyer avec succes");
-          /*Navigator.of(context).pushAndRemoveUntil(
+          Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
-                  (Route<dynamic> route) => false);*/
-         return btn1(context);
+                  (Route<dynamic> route) => false);
+          /*btn1(context);*/
         } else {
           // Afficher une erreur.
           String jsonString = response.body;

@@ -2,6 +2,7 @@ import 'package:banner_carousel/banner_carousel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 import '../../Model/Panneaux.dart';
 import '../../Provider/AutoecoleDataProvider.dart';
 import '../../Service/PanneauxService.dart';
@@ -23,34 +24,31 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
   List<PanneauDeConduite>? panneaux;
 
   //VARIABLE UTILSER POUR ÖUVOIR JOUER L'AUDIO
-  static const url = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
 
-  late AudioPlayer _audioPlayer;
+  late VideoPlayerController controlleraudio;
+  late String lienaudio ='';
 
-
+  loadAudioPlayer() {
+    controlleraudio = VideoPlayerController.network(
+        lienaudio);
+    print(lienaudio);
+    controlleraudio.addListener(() {
+      setState(() {});
+    });
+    controlleraudio.initialize().then((value) {
+      setState(() {});
+    });
+  }
   @override
   void initState() {
     super.initState();
     getAllPanneauxByType();
-    _init();
+
+    loadAudioPlayer();
+
 
   }
 
-  void _init() async{
-    _audioPlayer = AudioPlayer();
-    await _audioPlayer.setUrl(url);
-}
-  void play() {
-    _audioPlayer.play();
-  }
-
-  void pause() {
-    _audioPlayer.pause();
-  }
-
-  void dispose() {
-    _audioPlayer.dispose();
-  }
 
   getAllPanneauxByType() async {
     panneaux =
@@ -98,6 +96,14 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
                   GestureDetector(
                     onTap: () {
                       //await flutterTts.speak("${panneaux![i].vocal}"); // Lire le champ vocal
+                      lienaudio = "${panneaux![i].vocal}";
+                      //print(lienaudio);
+                      if (controlleraudio.value.isPlaying) {
+                        controlleraudio.pause();
+                      } else {
+                        controlleraudio.play();
+                      }
+                      setState(() {});
                       setState(() {
                         _selectedIndex = i;
                       });

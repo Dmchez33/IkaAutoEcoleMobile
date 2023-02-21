@@ -294,8 +294,8 @@ class _DetailLieuxMapState extends State<DetailLieuxMap> {
       //minWidth: 50,
       onPressed: () =>
           Dialogs.materialDialog(
-              msg: 'Are you sure ? you can\'t undo this',
-              title: "Delete",
+              msg: 'Êtes vous sûre de vouloir reserver',
+              title: "Confirmation",
               color: Colors.white,
               context: context,
               dialogWidth: kIsWeb ? 0.3 : null,
