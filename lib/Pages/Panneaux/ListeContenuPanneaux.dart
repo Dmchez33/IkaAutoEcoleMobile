@@ -32,7 +32,7 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
 
   loadAudioPlayer(String lienaudio) {
     controlleraudio = VideoPlayerController.network(lienaudio);
-    print(lienaudio);
+    //print(lienaudio);
     controlleraudio.addListener(() {
       setState(() {});
     });
@@ -104,6 +104,12 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
                       setState(() {
                         _selectedIndex = i;
                       });
+                      if (controlleraudio.value.isPlaying) {
+                        controlleraudio.pause();
+                      } else {
+                        controlleraudio.play();
+                      }
+                      setState(() {});
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 15),
