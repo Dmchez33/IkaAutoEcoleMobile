@@ -9,6 +9,8 @@ import 'package:ika_auto_ecole/Service/PanneauxService.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Model/TypeDeCourOuvert.dart';
+import '../../Service/CoursService.dart';
 import '../Compte/Connexion.dart';
 import '../Compte/compte.dart';
 import '../utilities/keys.dart';
@@ -41,17 +43,6 @@ class _coursState extends State<cours> {
 
   //INFORMATIONS CONCERNANT LES INFORMATION DE L'UTILISATEUR CONNECTER
   late SharedPreferences sharedPreferences;
-
-  /*late int id;
-  late String username;
-
-  late String email;
-
-  late List roles;
-
-  late String accessToken;
-
-  late String tokenType;*/
   bool isLoggedIn = false;
 
   @override
@@ -63,8 +54,8 @@ class _coursState extends State<cours> {
   }
 
   //LES ELEMENTS DU COURS
-  PanneauxService panneauxService = PanneauxService();
-  List<PanneauDeConduite>? panneaux;
+  CoursService coursService = CoursService();
+  List<Cours>? cours;
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -81,13 +72,15 @@ class _coursState extends State<cours> {
     if (sharedPreferences.getString("accessToken") == null) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
-          (Route<dynamic> route) => false);
+              (Route<dynamic> route) => false);
     }
   }
 
-  getAllCours() async{
-    panneaux = await panneauxService.getAllPanneaux();
-    Provider.of<AutoecoleDataProvider>(context,listen: false).panneauDeConduite = panneaux!;
+  getAllCours() async {
+    cours = await coursService.getAllTypeCours();
+    Provider
+        .of<AutoecoleDataProvider>(context, listen: false)
+        .TypeCoursOuvert = cours!;
     setState(() {
 
     });
@@ -96,331 +89,155 @@ class _coursState extends State<cours> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: const Color(0xFF1A237E),
-        centerTitle: true,
-        title: const Text('Cours'),
-        actions: <Widget>[
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF1A237E)),
-            onPressed: () {
-              Navigator.of(context).push(
+    if (cours == null) {
+      return Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: const Color(0xFF1A237E),
+            centerTitle: true,
+            title: const Text('Cours'),
+            actions: <Widget>[
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF1A237E)),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => compte()),
+                  );
+                },
+                child: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          body: const Center(
+
+            child: CircularProgressIndicator(),
+          ),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: const Color(0xFF1A237E),
+          centerTitle: true,
+          title: const Text('Cours'),
+          actions: <Widget>[
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF1A237E)),
+              onPressed: () {
+                Navigator.of(context).push(
                   MaterialPageRoute(
                       builder: (BuildContext context) => compte()),
-                  );
-            },
-            child: const CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.person,
-                color: Colors.black,
+                );
+              },
+              child: const CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Icon(
+                  Icons.person,
+                  color: Colors.black,
+                ),
               ),
-            ),
-          ),
-        ],
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            /*Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.10,
-              child: Image.asset(
-                'assets/images/cours1.png',
-                fit: BoxFit.fill,
-              ),
-            ),*/
-            Expanded(
-              child: Center(
-                  child: GridView.count(
-                primary: false,
-                padding: const EdgeInsets.all(10),
-                crossAxisSpacing: 5,
-                // marge vertical entre les elements
-                mainAxisSpacing: 5,
-                // marge horizontal entre les elements
-                crossAxisCount: 2,
-                // nombre d'elements par ligne
-                shrinkWrap: true,
-                children: [
-                  Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                        //
-                        // borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ListeCoursParContenu(),
-                            ),
-                          );
-                        },
-                        child: Stack(
-                          children: [
-                            Container(
-                                child: Image.asset(
-                              "assets/images/imagecours/arret et stationnement.png",
-                              height: 250,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            )
-                            ),
-                            Container(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                  alignment: Alignment.bottomCenter,
-                                  height: 20,
-                                  color: Colors.white,
-                                  child: const FittedBox(
-                                      fit: BoxFit.fitWidth,
-                                      child: Text(
-                                        'arret et stationnement',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "Poppins",
-                                        ),
-                                      ))),
-                            ),
-                          ],
-                        ),
-                      )),
-                  Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                        //borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      ),
-                      child: Stack(
-                        children: [
-                          Container(
-                              child: Image.asset(
-                            "assets/images/imagecours/panneau_de_signal.jpg",
-                            height: 250,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          )),
-                          Container(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                                alignment: Alignment.bottomCenter,
-                                height: 20,
-                                color: Colors.white,
-                                child: const FittedBox(
-                                    fit: BoxFit.fitWidth,
-                                    child: Text(
-                                      'Panneau de signalisation',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ))),
-                          ),
-                        ],
-                      )),
-                  Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                        //borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      ),
-                      child: Stack(
-                        children: [
-                          Container(
-                              child: Image.asset(
-                            "assets/images/imagecours/priorite.PNG",
-                            height: 250,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          )),
-                          Container(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                                alignment: Alignment.bottomCenter,
-                                height: 20,
-                                color: Colors.white,
-                                child: const FittedBox(
-                                    fit: BoxFit.fitWidth,
-                                    child: Text(
-                                      'Priorités',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ))),
-                          ),
-                        ],
-                      )),
-                  Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                        //borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      ),
-                      child: Stack(
-                        children: [
-                          Container(
-                              child: Image.asset(
-                            "assets/images/imagecours/notion_theorie.png",
-                            height: 250,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          )),
-                          Container(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                                alignment: Alignment.bottomCenter,
-                                height: 20,
-                                color: Colors.white,
-                                child: const FittedBox(
-                                    fit: BoxFit.fitWidth,
-                                    child: Text(
-                                      'Notion théoriques et pratiques',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ))),
-                          ),
-                        ],
-                      )),
-                ],
-              )),
-            ),
-
-            /// Banner Customized Without Indicator
-            BannerCarousel(
-              height: 110,
-              animation: true,
-              viewportFraction: 0.8,
-              showIndicator: true,
-              spaceBetween: 1.0,
-              customizedBanners: [
-                Stack(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        /*border: Border.all(
-                          color: Colors.green,
-                          width: 1,
-                        ),*/
-                        borderRadius: BorderRadius.circular(5),
-                        image: const DecorationImage(
-                          image: AssetImage(
-                              'assets/images/imagecours/Partage_de_la_route.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                          alignment: Alignment.bottomCenter,
-                          height: 20,
-                          color: Colors.white,
-                          child: const FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Text(
-                                'Partage de la route',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ))),
-                    ),
-                  ],
-                ),
-                Stack(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        /*border: Border.all(
-                          color: Colors.green,
-                          width: 1,
-                        ),*/
-                        borderRadius: BorderRadius.circular(5),
-                        image: const DecorationImage(
-                          image:
-                              AssetImage('assets/images/imagecours/tunel.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                          alignment: Alignment.bottomCenter,
-                          height: 20,
-                          color: Colors.white,
-                          child: const FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Text(
-                                'Tunels et partages',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ))),
-                    ),
-                  ],
-                ),
-                Stack(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        /*border: Border.all(
-                          color: Colors.green,
-                          width: 1,
-                        ),*/
-                        borderRadius: BorderRadius.circular(5),
-                        image: const DecorationImage(
-                          image: AssetImage(
-                              'assets/images/imagecours/Visibilité_et_eclairage.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                          alignment: Alignment.bottomCenter,
-                          height: 20,
-                          color: Colors.white,
-                          child: const FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Text(
-                                'Visibilité et eclairage',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ))),
-                    ),
-                  ],
-                ),
-              ],
             ),
           ],
         ),
-      ),
-    );
+        body: Container(
+          child: Column(
+            children: [
+            Container(
+            width: double.infinity,
+            height: 150,
+            decoration: const BoxDecoration(
+              color: Color(0xFF1A237E),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),),
+              Expanded(
+                child: Center(
+                    child: GridView.count(
+                      primary: false,
+                      padding: const EdgeInsets.all(10),
+                      crossAxisSpacing: 5,
+                      // marge vertical entre les elements
+                      mainAxisSpacing: 5,
+                      // marge horizontal entre les elements
+                      crossAxisCount: 2,
+                      // nombre d'elements par ligne
+                      shrinkWrap: true,
+                      children: [
+                        for(int i=0; i<cours!.length; i++)...[
+                          Card(
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  color: Theme
+                                      .of(context)
+                                      .colorScheme
+                                      .outline,
+                                ),
+                                //
+                                // borderRadius: const BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (
+                                          context) => ListeCoursParContenu(idType: cours![i].id),
+                                    ),
+                                  );
+                                },
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                        child: Image.network(
+                                          "${cours![i].image}",
+                                          height: 250,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        )
+                                    ),
+                                    Container(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                          alignment: Alignment.bottomCenter,
+                                          height: 20,
+                                          color: Colors.white,
+                                          child: FittedBox(
+                                              fit: BoxFit.fitWidth,
+                                              child: Text(
+                                                '${cours![i].libelle}',
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: "Poppins",
+                                                ),
+                                              ))),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                        ],
+
+
+                      ],
+                    )),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   }
 }
 

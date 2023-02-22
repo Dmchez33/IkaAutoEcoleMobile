@@ -31,7 +31,8 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
   late PanneauDeConduite panneauSelectionne;
 
   loadAudioPlayer(String lienaudio) {
-    controlleraudio = VideoPlayerController.network(lienaudio);
+    controlleraudio = VideoPlayerController.asset(
+        'assets/audio/panneaux.mp4');
     print(lienaudio);
     controlleraudio.addListener(() {
       setState(() {});
@@ -39,6 +40,11 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
     controlleraudio.initialize().then((value) {
       setState(() {});
     });
+  }
+  @override
+  void dispose() {
+    controlleraudio.dispose();
+    super.dispose();
   }
   @override
   void initState() {
@@ -104,6 +110,12 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
                       setState(() {
                         _selectedIndex = i;
                       });
+                      if (controlleraudio.value.isPlaying) {
+                        controlleraudio.pause();
+                      } else {
+                        controlleraudio.play();
+                      }
+                      setState(() {});
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 15),

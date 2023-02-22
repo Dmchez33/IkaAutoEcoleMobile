@@ -12,7 +12,6 @@ import 'package:ika_auto_ecole/Pages/map/map.dart';
 import 'package:ika_auto_ecole/Pages/widgets/question_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '/Pages/Cours/coursePage.dart';
 import '/Pages/Quiz/Question.dart';
 import '/Pages/Quiz/SeletedQuestionPage.dart';
 import 'Compte/Connexion.dart';
