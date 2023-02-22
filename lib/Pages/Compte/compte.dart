@@ -198,7 +198,7 @@ class _compteState extends State<compte> {
               const SizedBox(
                 height: 15,
               ),
-              Row(
+              /*Row(
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width *.4,
@@ -208,7 +208,7 @@ class _compteState extends State<compte> {
                       style: TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold,letterSpacing: 2),
                     ),
-                  ),
+                  )
                   SizedBox(
                     width: MediaQuery.of(context).size.width *.5,
                     child: Row(
@@ -221,7 +221,7 @@ class _compteState extends State<compte> {
                     ),
                   )
                 ],
-              ),
+              ),*/
               const SizedBox(
                 height: 25,
               ),

@@ -31,14 +31,21 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
   late PanneauDeConduite panneauSelectionne;
 
   loadAudioPlayer(String lienaudio) {
-    controlleraudio = VideoPlayerController.network(lienaudio);
-    //print(lienaudio);
+
+    controlleraudio = VideoPlayerController.asset(
+        'assets/audio/panneaux.mp4');
+    print(lienaudio);
     controlleraudio.addListener(() {
       setState(() {});
     });
     controlleraudio.initialize().then((value) {
       setState(() {});
     });
+  }
+  @override
+  void dispose() {
+    controlleraudio.dispose();
+    super.dispose();
   }
   @override
   void initState() {
