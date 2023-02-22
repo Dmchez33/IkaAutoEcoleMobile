@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     final msg = jsonEncode({"username": username, "password": password});
 
     var response = await http.post(
-        Uri.parse('http://192.168.43.58:8080/api/auth/signin'),
+        Uri.parse('http://192.168.47.154:8080/api/auth/signin'),
         body: msg,
         headers: headers);
     jsonResponse = json.decode(response.body);
