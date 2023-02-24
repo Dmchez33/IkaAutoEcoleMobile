@@ -78,8 +78,7 @@ class _coursState extends State<cours> {
 
   getAllCours() async {
     cours = await coursService.getAllTypeCours();
-    Provider
-        .of<AutoecoleDataProvider>(context, listen: false)
+    Provider.of<AutoecoleDataProvider>(context, listen: false)
         .TypeCoursOuvert = cours!;
     setState(() {
 

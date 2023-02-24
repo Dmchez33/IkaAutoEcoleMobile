@@ -32,6 +32,7 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
   List<contenuCours>? contenu;
 
   getAllCours() async {
+    print(widget.idContenu);
     contenu = await coursService.getAllContenu(widget.idContenu);
     Provider
         .of<AutoecoleDataProvider>(context, listen: false)
