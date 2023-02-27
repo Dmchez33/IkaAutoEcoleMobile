@@ -19,6 +19,7 @@ class LiteContenuPanneaux extends StatefulWidget {
 }
 
 class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
+
   //LES ELEMENTS DU COURS
   PanneauxService panneauxService = PanneauxService();
   List<PanneauDeConduite>? panneaux;
@@ -32,8 +33,9 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
 
   loadAudioPlayer(String lienaudio) {
 
-    controlleraudio = VideoPlayerController.asset(
-        'assets/audio/panneaux.mp4');
+    controlleraudio = VideoPlayerController.network(
+        lienaudio);
+
     print(lienaudio);
     controlleraudio.addListener(() {
       setState(() {});
@@ -107,7 +109,7 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
                       setState(() {
                         panneauSelectionne = panneaux![i];
                       });
-                      loadAudioPlayer(panneauSelectionne.vocal!);
+                      loadAudioPlayer('${panneaux![i].vocal}');
                       setState(() {
                         _selectedIndex = i;
                       });
@@ -121,8 +123,16 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0xFF1A237E),
+                            spreadRadius: 2,
+                            blurRadius: 7,
+                            //offset: Offset(0,3)
+                          )
+                        ],
                         borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Colors.red),
+                        //border: Border.all(color: Colors.red),
                         color: Colors.white,
                         image: DecorationImage(
                           image: NetworkImage("${panneaux![i].image}"),
@@ -152,42 +162,47 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: IndexedStack(
-                index: _selectedIndex,
-                children: [
-                  for (int i = 0; i < panneaux!.length; i++) ...[
-                    Visibility(
-                      visible: _selectedIndex == i,
-                      child: Column(
-                        children: [
-                          Text(
-                            "${panneaux![i].nom}",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
+              child: SingleChildScrollView(
+                child: IndexedStack(
+                  index: _selectedIndex,
+                  children: [
+                    for (int i = 0; i < panneaux!.length; i++) ...[
+                      Visibility(
+                        visible: _selectedIndex == i,
+                        child: Column(
+                          children: [
+                            Text(
+                              "${panneaux![i].nom}",
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          Image.network(
-                            "${panneaux![i].image}",
-                            //height: 150,
-                            width: 200,
-                            fit: BoxFit.cover,
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            "${panneaux![i].description}",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 16,
+                            const SizedBox(height: 10),
+                            Image.network(
+                              "${panneaux![i].image}",
+                              //height: 150,
+                              //width: 200,
+                              fit: BoxFit.cover,
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 10),
+                            Container(
+                              margin: const EdgeInsets.all(15),
+                              child: Text(
+                                "${panneaux![i].description}",
+                                textAlign: TextAlign.justify,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           ],

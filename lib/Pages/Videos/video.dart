@@ -91,6 +91,7 @@ class _YoutubePlayerDemoAppState extends State<YoutubePlayerDemoApp> {
       initialIndex: _selectedTabIndex,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false, // cacher l'icône de retour
           bottom: const TabBar(
             tabs: [
               Tab(

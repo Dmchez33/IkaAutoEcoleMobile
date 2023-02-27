@@ -92,6 +92,7 @@ class _coursState extends State<cours> {
       return Scaffold(
           appBar: AppBar(
             elevation: 0,
+            automaticallyImplyLeading: false, // cacher l'icône de retour
             backgroundColor: const Color(0xFF1A237E),
             centerTitle: true,
             title: const Text('Cours'),
@@ -124,6 +125,7 @@ class _coursState extends State<cours> {
       return Scaffold(
         appBar: AppBar(
           elevation: 0,
+          automaticallyImplyLeading: false, // cacher l'icône de retour
           backgroundColor: const Color(0xFF1A237E),
           centerTitle: true,
           title: const Text('Cours'),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:ika_auto_ecole/Pages/Compte/Inscription.dart';
 
+import 'ChoixInscription.dart';
 import 'Compte/Connexion.dart';
 import 'HomePage.dart';
 
@@ -75,7 +76,7 @@ class _CarouselPageState extends State<CarouselPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Incription(),
+                            builder: (context) => ChoixInscription(),
                           ),
                         );
                       },

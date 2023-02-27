@@ -120,7 +120,10 @@ class _localisationState extends State<localisation> {
           backgroundColor: const Color(0xFF1A237E),
           centerTitle: true,
           title: const Text('Accueil'),
+          automaticallyImplyLeading: false, // cacher l'icône de retour
+
           actions: <Widget>[
+
             ElevatedButton(
               style:
                   ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1A237E)),

@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import '../../main.dart';
 import '../HomePage.dart';
 import '../carousel.dart';
+import '../utilities/keys.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -51,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
     final msg = jsonEncode({"username": username, "password": password});
 
     var response = await http.post(
-        Uri.parse('http://192.168.47.154:8080/api/auth/signin'),
+        Uri.parse('$url/auth/signin'),
         body: msg,
         headers: headers);
     jsonResponse = json.decode(response.body);

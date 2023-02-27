@@ -26,6 +26,7 @@ class QuizSelectionPage extends StatelessWidget {
           elevation: 0,
           backgroundColor: const Color(0xFF1A237E),
           centerTitle: true,
+          automaticallyImplyLeading: false, // cacher l'icône de retour
           title: const Text('Quiz'),
           actions: <Widget>[
             ElevatedButton(

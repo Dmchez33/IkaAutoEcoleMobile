@@ -69,6 +69,7 @@ class _PanneauxState extends State<Panneaux> {
           backgroundColor: const Color(0xFF1A237E),
           centerTitle: true,
           title: const Text('Panneaux'),
+          automaticallyImplyLeading: false, // cacher l'icône de retour
           actions: <Widget>[
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF1A237E)),
@@ -109,6 +110,7 @@ class _PanneauxState extends State<Panneaux> {
     } else {
       return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false, // cacher l'icône de retour
           elevation: 0,
           backgroundColor: const Color(0xFF1A237E),
           centerTitle: true,
