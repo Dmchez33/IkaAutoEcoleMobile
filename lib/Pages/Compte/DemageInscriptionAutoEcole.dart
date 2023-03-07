@@ -169,9 +169,9 @@ class _InscriptionProprietaireAutoEcolePageState
                       height: 10,
                     ),
                     Text(
-                      "Les informations personnelles",
+                      "Les informations sur le propriétaire",
                       style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 10,
@@ -179,7 +179,7 @@ class _InscriptionProprietaireAutoEcolePageState
                     TextFormField(
                       controller: _nomController,
                       decoration: const InputDecoration(
-                        labelText: "Nom",
+                        labelText: "Nom *",
                       ).copyWith(
                         labelStyle: const TextStyle(
                           color: Colors.black,
@@ -204,7 +204,7 @@ class _InscriptionProprietaireAutoEcolePageState
                     TextFormField(
                       controller: _prenomController,
                       decoration: const InputDecoration(
-                        labelText: "Prénom",
+                        labelText: "Prénom *",
                       ).copyWith(
                         labelStyle: const TextStyle(
                           color: Colors.black,
@@ -229,7 +229,7 @@ class _InscriptionProprietaireAutoEcolePageState
                     TextFormField(
                       controller: _usernameController,
                       decoration: const InputDecoration(
-                        labelText: "Nom d'utilisateur",
+                        labelText: "Nom d'utilisateur *",
                       ).copyWith(
                         labelStyle: const TextStyle(
                           color: Colors.black,
@@ -255,7 +255,7 @@ class _InscriptionProprietaireAutoEcolePageState
                     TextFormField(
                       controller: _telephoneController,
                       decoration: const InputDecoration(
-                        labelText: "Téléphone",
+                        labelText: "Téléphone *",
                       ).copyWith(
                         labelStyle: const TextStyle(
                           color: Colors.black,
@@ -280,7 +280,7 @@ class _InscriptionProprietaireAutoEcolePageState
                     TextFormField(
                       controller: _emailController,
                       decoration: const InputDecoration(
-                        labelText: "E-mail",
+                        labelText: "E-mail *",
                       ).copyWith(
                         labelStyle: const TextStyle(
                           color: Colors.black,
@@ -326,9 +326,9 @@ class _InscriptionProprietaireAutoEcolePageState
                       height: 10,
                     ),
                     Text(
-                      "Les informations personnelles",
+                      "Les informations sur Auto-école",
                       style:
-                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 10,
@@ -336,7 +336,7 @@ class _InscriptionProprietaireAutoEcolePageState
                     TextFormField(
                       controller: _nomAutoEcoleController,
                       decoration: const InputDecoration(
-                        labelText: "Nom de l'auto-école",
+                        labelText: "Nom de l'auto-école *",
                       ).copyWith(
                         labelStyle: const TextStyle(
                           color: Colors.black,
@@ -361,7 +361,7 @@ class _InscriptionProprietaireAutoEcolePageState
                     TextFormField(
                       controller: _villeController,
                       decoration: const InputDecoration(
-                        labelText: "Ville",
+                        labelText: "Ville *",
                       ).copyWith(
                         labelStyle: const TextStyle(
                           color: Colors.black,
@@ -386,7 +386,7 @@ class _InscriptionProprietaireAutoEcolePageState
                     TextFormField(
                       controller: _quartierController,
                       decoration: const InputDecoration(
-                        labelText: "Quartier",
+                        labelText: "Quartier *",
                       )
                           .copyWith(
                         labelStyle: const TextStyle(
@@ -426,7 +426,7 @@ class _InscriptionProprietaireAutoEcolePageState
                     TextFormField(
                       controller: _porteController,
                       decoration: const InputDecoration(
-                        labelText: "Porte",
+                        labelText: "Porte *",
                       ).copyWith(
                         labelStyle: const TextStyle(
                           color: Colors.black,
@@ -454,7 +454,7 @@ class _InscriptionProprietaireAutoEcolePageState
                     TextFormField(
                       controller: _rueController,
                       decoration: const InputDecoration(
-                        labelText: "Rue",
+                        labelText: "Rue *",
                       ).copyWith(
                         labelStyle: const TextStyle(
                           color: Colors.black,

@@ -27,13 +27,14 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
   //VARIABLE UTILSER POUR ÖUVOIR JOUER L'AUDIO
 
   late VideoPlayerController controlleraudio;
-  late String lienaudio ='';
+  //late String lienaudio ='';
+  AudioPlayer _plyer = AudioPlayer();
 
   late PanneauDeConduite panneauSelectionne;
 
   loadAudioPlayer(String lienaudio) {
 
-    controlleraudio = VideoPlayerController.network(
+    controlleraudio = VideoPlayerController.asset(
         lienaudio);
 
     print(lienaudio);
@@ -105,11 +106,13 @@ class _LiteContenuPanneauxState extends State<LiteContenuPanneaux> {
               customizedBanners: [
                 for (int i = 0; i < panneaux!.length; i++) ...[
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async{
+                      /*await _plyer.setAsset('assets/audio/panneaux/${panneaux![i].vocal}');
+                      await _plyer.play();*/
                       setState(() {
                         panneauSelectionne = panneaux![i];
                       });
-                      loadAudioPlayer('${panneaux![i].vocal}');
+                      loadAudioPlayer('assets/audio/panneaux/${panneaux![i].vocal}');
                       setState(() {
                         _selectedIndex = i;
                       });

@@ -68,7 +68,7 @@ class ChoixInscription extends StatelessWidget {
                 );
                 // L'utilisateur a cliqué sur le bouton "Inscription propriétaire d'auto-école"
               },
-              child: Text("Inscription propriétaire d'auto-école"),
+              child: Text("Demande de creation d'auto-école"),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF1A237E),
                 minimumSize: Size(double.infinity, 50.0),

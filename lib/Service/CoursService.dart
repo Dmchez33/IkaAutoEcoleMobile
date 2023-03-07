@@ -32,29 +32,9 @@ class CoursService{
 
 
   //Methode permettant d'obtenir les panneaux par son type
-  /*Future<List<contenuCours>> getAllContenuCours() async {
+  Future<List<contenuCours>> getAllContenuCours() async {
     final http.Response response = await http.get(
-      Uri.parse('${url}/cours/getCours'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
-
-
-
-    print("getpanneauxParType: ${response.body}");
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
-      return jsonResponse.map((contenucours) => contenuCours.fromJson(contenucours)).toList();
-    } else {
-      throw Exception('Failed to retrieve AutoEcole');
-    }
-  }*/
-
-  //Methode permettant d'obtenir les panneaux par son type
-  Future<List<contenuCours>> getAllContenuCoursBys(int? id) async {
-    final http.Response response = await http.get(
-      Uri.parse('${url}/cours/getContenuByCour/${id}'),
+      Uri.parse('${url}/cours/getContenu'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -71,7 +51,28 @@ class CoursService{
     }
   }
 
-  Future<List<contenuCours>> getAllContenu(int? id) async {
+  //Methode permettant d'obtenir Le cours par son Id
+  /*Future<List<contenuCours>> getAllContenuCoursBys(int? id) async {
+    final http.Response response = await http.get(
+      Uri.parse('${url}/cours/getContenuByCour/${id}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+
+
+    print("getpanneauxParType: ${response.body}");
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
+      return jsonResponse.map((contenucours) => contenuCours.fromJson(contenucours)).toList();
+    } else {
+      throw Exception('Failed to retrieve AutoEcole');
+    }
+  }*/
+
+  Future<contenuCours> getAllContenuById(int? id) async {
+    print("id = $id");
     final http.Response response = await http.get(
       Uri.parse('${url}/cours/getContenu/${id}'),
       headers: <String, String>{
@@ -83,8 +84,8 @@ class CoursService{
 
     print("getpanneauxParType: ${response.body}");
     if (response.statusCode == 200) {
-      final List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
-      return jsonResponse.map((contenucoursbyid) => contenuCours.fromJson(contenucoursbyid)).toList();
+      final  jsonResponse = json.decode(utf8.decode(response.bodyBytes));
+      return contenuCours.fromJson(jsonResponse);
     } else {
       throw Exception('Failed to retrieve AutoEcole');
     }

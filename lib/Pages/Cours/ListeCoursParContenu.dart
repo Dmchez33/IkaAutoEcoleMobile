@@ -24,13 +24,13 @@ class _ListeCoursParContenuState extends State<ListeCoursParContenu> {
   List<contenuCours>? contenu;
 
   getAllCours() async {
-    contenu = await coursService.getAllContenuCoursBys(widget.idType);
+    /*contenu = await coursService.getAllContenuById(widget.idType);
     Provider
         .of<AutoecoleDataProvider>(context, listen: false)
         .contenu = contenu!;
     setState(() {
 
-    });
+    });*/
   }
 
   @override

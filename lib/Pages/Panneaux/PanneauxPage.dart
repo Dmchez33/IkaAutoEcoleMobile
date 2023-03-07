@@ -93,12 +93,13 @@ class _PanneauxState extends State<Panneaux> {
             Container(
               height: 60,
               width: MediaQuery.of(context).size.width,
-              child: ClipPath(
+              color: Color(0xFF1A237E),
+              /*child: ClipPath(
                 clipper: BottomArcClipper(),
                 child: Container(
                   color: Color(0xFF1A237E),
                 ),
-              ),
+              ),*/
             ),
             const Center(
 
@@ -139,21 +140,33 @@ class _PanneauxState extends State<Panneaux> {
               Container(
                 height: 60,
                 width: MediaQuery.of(context).size.width,
-                child: ClipPath(
+                color: Color(0xFF1A237E),
+               /* decoration: BoxDecoration(
+                  color: Color(0xFF1A237E),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),*/
+                /*child: ClipPath(
                   clipper: BottomArcClipper(),
                   child: Container(
                     color: Color(0xFF1A237E),
                   ),
-                ),
+                ),*/
               ),
               Expanded(
-                child: Center(
+                child: Container(
                     child: GridView.count(
                       primary: false,
                       padding: const EdgeInsets.all(10),
-                      crossAxisSpacing: 5,
+                      crossAxisSpacing: 15,
                       // marge vertical entre les elements
-                      mainAxisSpacing: 5,
+                      mainAxisSpacing: 1,
                       // marge horizontal entre les elements
                       crossAxisCount: 2,
                       // nombre d'elements par ligne
@@ -161,54 +174,67 @@ class _PanneauxState extends State<Panneaux> {
                       children: [
 
                         for (int i = 0; i < typePanneaux!.length; i++) ...[
-                          Card(
-                              elevation: 2,
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                  color: Theme.of(context).colorScheme.outline,
+                          Container(
+                            decoration: BoxDecoration(
+
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFF1A237E).withOpacity(0.3),
+                                  //spreadRadius: 5,
+                                  blurRadius: 4,
+                                  offset: Offset(2, 2), // changes position of shadow
                                 ),
-                                //
-                                // borderRadius: const BorderRadius.all(Radius.circular(12)),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          LiteContenuPanneaux(nomTypePanneaux: typePanneaux![i].type,),
-                                    ),
-                                  );
-                                },
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                        child: Image.network(
-                                          "${typePanneaux![i].image}",
-                                          height: 250,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
-                                        )),
-                                    Container(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                          alignment: Alignment.bottomCenter,
-                                          height: 20,
-                                          color: Colors.white,
-                                          child: FittedBox(
-                                              fit: BoxFit.fitWidth,
-                                              child: Text(
-                                                '${typePanneaux![i].type}',
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: "Poppins",
-                                                ),
-                                              ))),
-                                    ),
-                                  ],
+                              ],
+                            ),
+                            child: Card(
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    color: Theme.of(context).colorScheme.outline,
+                                  ),
+                                  //
+                                  // borderRadius: const BorderRadius.all(Radius.circular(12)),
                                 ),
-                              )
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            LiteContenuPanneaux(nomTypePanneaux: typePanneaux![i].type,),
+                                      ),
+                                    );
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                          child: Image.network(
+                                            "${typePanneaux![i].image}",
+                                            height: 250,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                          )),
+                                      Container(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Container(
+                                            alignment: Alignment.bottomCenter,
+                                            height: 20,
+                                            color: Colors.white,
+                                            child: FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Text(
+                                                  '${typePanneaux![i].type}',
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: "Poppins",
+                                                  ),
+                                                ))),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                            ),
                           ),
                         ]
                       ],

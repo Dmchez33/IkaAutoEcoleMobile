@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ika_auto_ecole/Pages/HomePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../utilities/keys.dart';
 import 'Connexion.dart';
@@ -28,7 +29,6 @@ class _compteState extends State<compte> {
     playAudioWelCome = false;
   }
 
-
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
     isLoggedIn = sharedPreferences.getBool("isLoggedIn")!;
@@ -37,9 +37,10 @@ class _compteState extends State<compte> {
     if (sharedPreferences.getString("accessToken") == null) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
-              (Route<dynamic> route) => false);
+          (Route<dynamic> route) => false);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -78,10 +79,8 @@ class _compteState extends State<compte> {
                 return CircularProgressIndicator();
               },
             ),
-
             Container(
-              child:
-              Center(
+              child: Center(
                 child: Text("Encours de Conception"),
               ),
             )
@@ -98,168 +97,101 @@ class _compteState extends State<compte> {
     if (isLoggedIn) {
       return Column(
         children: [
-
-          Container(
-              child: Image.asset(
-                "assets/images/imageMap/image2.png",
-
-              )),
-
-
-          Column(
+          // Container(
+          //   width: MediaQuery.of(context).size.width,
+          //   height: MediaQuery.of(context).size.height * 0.2,
+          //   color: Color(0xFF1A237E),
+          //   child: Center(
+          //     child: Container(
+          //       width: 100.0,
+          //       height: 100.0,
+          //       decoration: const BoxDecoration(
+          //         shape: BoxShape.circle,
+          //         color: Colors.blueGrey,
+          //       ),
+          //       child: const Icon(
+          //         Icons.person,
+          //         color: Colors.white,
+          //         size: 60.0,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          
+          Row(
             children: [
-
-              Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width *.4,
-                    margin: const EdgeInsets.only(left: 10),
-                    child: const Text(
-
-                      "Nom",
-                      style: TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold,letterSpacing: 2),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width *.4,
-                    child: const Text("DEMBELE",style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w400,letterSpacing: 1)),
-                  )
-                ],
+Container(
+  width: MediaQuery.of(context).size.width * .3,
+              child: Image.asset(
+            "assets/images/imageMap/image2.png",
+          )),
+          Container(
+            width: MediaQuery.of(context).size.width * .7,
+            child: Column(
+              children: [
+                Card(
+            elevation: 5.0,
+            child: ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Idrissa dembele'),
+              //subtitle: Text('Prénom Nom de famille'),
+            ),
+        ),Card(
+            elevation: 5.0,
+            child: ListTile(
+              leading: Icon(Icons.phone),
+              title: Text('83242448'),
+              //subtitle: Text('Prénom Nom de famille'),
+            ),
+        ),
+        Card(
+            elevation: 5.0,
+            child: GestureDetector(
+              onTap: () {
+                launch('mailto:iddembele206@gmail.com');
+              },
+              child: ListTile(
+                leading: Icon(Icons.mail),
+                title: Text("iddembele206@gmail.com"),
+                //subtitle: Text('Prénom Nom de famille'),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width *.4,
-                    margin: const EdgeInsets.only(left: 10),
-                    child: const Text(
-
-                      "Prénom",
-                      style: TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold,letterSpacing: 2),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width *.4,
-                    child: const Text("Idrissa",style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w400,letterSpacing: 1)),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-
-              Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width *.4,
-                    margin: const EdgeInsets.only(left: 10),
-                    child: const Text(
-
-                      "Téléphone",
-                      style: TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold,letterSpacing: 2),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width *.4,
-                    child: const Text("83252448",style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w400,letterSpacing: 1)),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width *.4,
-                    margin: const EdgeInsets.only(left: 10),
-                    child: const Text(
-
-                      "Email",
-                      style: TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold,letterSpacing: 2),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width *.4,
-                    child: const Text("iddembele206@gmail.com",style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w400,letterSpacing: 1)),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              /*Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width *.4,
-                    margin: const EdgeInsets.only(left: 10, ),
-                    child: const Text(
-                      "Niveau:",
-                      style: TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold,letterSpacing: 2),
-                    ),
-                  )
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width *.5,
-                    child: Row(
-                      children: const [
-                        Text("Débutant",style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w400,letterSpacing: 1)),
-                        Icon(Icons.star, color: Color(0xFF6200EE),),
-                        Icon(Icons.star, color: Color(0xFF6200EE),)
-                      ],
-                    ),
-                  )
-                ],
-              ),*/
-              const SizedBox(
-                height: 25,
-              ),
-
-              Container(
-                width: MediaQuery.of(context).size.width *.8,
+            ),
+        ),
+              ],
+            ),
+          ),
+            ],
+          ),
+          
+          Container(
+                width: MediaQuery.of(context).size.width * .8,
                 height: 35,
                 child: ElevatedButton(
-
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF6200EE)
-                  ),
+                      backgroundColor: Color(0xFF6200EE)),
                   onPressed: () {
                     sharedPreferences.clear();
                     sharedPreferences.commit();
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                             builder: (BuildContext context) => MainPage()),
-                            (Route<dynamic> route) => false);
+                        (Route<dynamic> route) => false);
                   },
                   child: Text("Déconnecter"),
                 ),
               )
-            ],
-          ),
         ],
       );
     }
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-
         SizedBox(
           width: 200,
           height: 45,
           child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF6200EE)),
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: Color(0xFF6200EE)),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -269,8 +201,7 @@ class _compteState extends State<compte> {
                 );
               },
               child: const Text("INSCRIPTION",
-                  style:
-                  TextStyle(fontFamily: "Poppins", fontSize: 16))),
+                  style: TextStyle(fontFamily: "Poppins", fontSize: 16))),
         ),
         const SizedBox(
           height: 15,
@@ -279,9 +210,7 @@ class _compteState extends State<compte> {
           width: 200,
           height: 45,
           child: ElevatedButton(
-
               style: ElevatedButton.styleFrom(
-
                 backgroundColor: Color(0xFF6200EE),
               ),
               onPressed: () {

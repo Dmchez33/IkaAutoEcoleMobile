@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Model/TypeDeCourOuvert.dart';
+import '../../Model/course.dart';
 import '../../Service/CoursService.dart';
 import '../Compte/Connexion.dart';
 import '../Compte/compte.dart';
@@ -55,7 +56,7 @@ class _coursState extends State<cours> {
 
   //LES ELEMENTS DU COURS
   CoursService coursService = CoursService();
-  List<Cours>? cours;
+  List<contenuCours>? cours;
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -77,9 +78,9 @@ class _coursState extends State<cours> {
   }
 
   getAllCours() async {
-    cours = await coursService.getAllTypeCours();
+    cours = await coursService.getAllContenuCours();
     Provider.of<AutoecoleDataProvider>(context, listen: false)
-        .TypeCoursOuvert = cours!;
+        .contenu = cours!;
     setState(() {
 
     });
@@ -149,10 +150,11 @@ class _coursState extends State<cours> {
             ),
           ],
         ),
-        body: Container(
+        body:
+        Container(
           child: Column(
             children: [
-            Container(
+            /*Container(
             width: double.infinity,
             height: 150,
             decoration: const BoxDecoration(
@@ -161,73 +163,99 @@ class _coursState extends State<cours> {
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
               ),
-            ),),
+            ),),*/
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                color: Color(0xFF1A237E),
+                /*child: ClipPath(
+                  clipper: BottomArcClipper(),
+                  child: Container(
+                    color: Color(0xFF1A237E),
+                  ),
+                ),*/
+              ),
               Expanded(
-                child: Center(
+                child: Container(
                     child: GridView.count(
                       primary: false,
                       padding: const EdgeInsets.all(10),
-                      crossAxisSpacing: 5,
+                      crossAxisSpacing: 15,
                       // marge vertical entre les elements
-                      mainAxisSpacing: 5,
+                      mainAxisSpacing: 15,
                       // marge horizontal entre les elements
                       crossAxisCount: 2,
                       // nombre d'elements par ligne
                       shrinkWrap: true,
                       children: [
                         for(int i=0; i<cours!.length; i++)...[
-                          Card(
-                              elevation: 2,
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                  color: Theme
-                                      .of(context)
-                                      .colorScheme
-                                      .outline,
+                          Container(
+
+                            decoration: BoxDecoration(
+
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFF1A237E).withOpacity(0.3),
+                                  //spreadRadius: 5,
+                                  blurRadius: 3,
+                                  offset: Offset(1, 1), // changes position of shadow
                                 ),
-                                //
-                                // borderRadius: const BorderRadius.all(Radius.circular(12)),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (
-                                          context) => ListeCoursParContenu(idType: cours![i].id),
-                                    ),
-                                  );
-                                },
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                        child: Image.network(
-                                          "${cours![i].image}",
-                                          height: 250,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
-                                        )
-                                    ),
-                                    Container(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                          alignment: Alignment.bottomCenter,
-                                          height: 20,
-                                          color: Colors.white,
-                                          child: FittedBox(
-                                              fit: BoxFit.fitWidth,
-                                              child: Text(
-                                                '${cours![i].libelle}',
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: "Poppins",
-                                                ),
-                                              ))),
-                                    ),
-                                  ],
+                              ],
+                            ),
+                            child: Card(
+                                shadowColor: Color(0xFF1A237E),
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    color: Theme
+                                        .of(context)
+                                        .colorScheme
+                                        .outline,
+                                  ),
+                                  //
+                                  // borderRadius: const BorderRadius.all(Radius.circular(12)),
                                 ),
-                              )),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (
+                                            context) => DetailCoursPage(idContenu: cours![i].id),
+                                      ),
+                                    );
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                          child: Image.network(
+                                            "${cours![i].image}",
+                                            height: 250,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                          )
+                                      ),
+                                      Container(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Container(
+                                            alignment: Alignment.bottomCenter,
+                                            height: 20,
+                                            color: Colors.white,
+                                            child: FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Text(
+                                                  '${cours![i].titre}',
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: "Poppins",
+                                                  ),
+                                                ))),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ),
                         ],
 
 

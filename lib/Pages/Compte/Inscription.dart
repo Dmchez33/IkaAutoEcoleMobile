@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:ika_auto_ecole/Pages/utilities/keys.dart';
 import 'package:lottie/lottie.dart';
 import 'package:material_dialogs/dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
@@ -42,16 +43,52 @@ class _IncriptionState extends State<Incription> {
       var jsonData = jsonEncode(data);
         print(jsonData);
       // Envoyer les données de l'utilisateur à l'API.
-      http.post(Uri.parse('http://192.168.47.154:8080/api/apprenant/save'),
+      http.post(Uri.parse('$url/apprenant/save'),
           headers: {"Content-Type": "application/json"},
           body: jsonData).then((response) {
         if (response.statusCode == 200) {
           // Afficher un message de réussite ou rediriger l'utilisateur vers une autre page.
           print("donner envoyer avec succes");
-          Navigator.of(context).pushAndRemoveUntil(
+          
+          /*btn1(context);*/
+          showDialog(
+            barrierDismissible: true,
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                backgroundColor: Colors.white,
+                title: Text('Envoi avec succès'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      'assets/carousel/succes.gif',
+                      fit: BoxFit.contain,
+                      height: 150,
+                    ),
+                    Text('Votre compte est cré avec success '
+                        ,
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF1A237E),
+                        minimumSize: Size(double.infinity, 50.0),
+                      ),
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
                   (Route<dynamic> route) => false);
-          /*btn1(context);*/
+                      },
+                    ),
+                  ],
+                ) ,
+
+              );
+            },
+          );
         } else {
           // Afficher une erreur.
           String jsonString = response.body;
@@ -111,11 +148,11 @@ class _IncriptionState extends State<Incription> {
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
-                      icon: Icon(
-                        Icons.person,
-                        color: Colors.black,
-                      ),
-                      hintText: "Username",
+                      // icon: Icon(
+                      //   Icons.person,
+                      //   color: Colors.black,
+                      // ),
+                      hintText: "Username *",
                       border: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       hintStyle: TextStyle(color: Colors.black)),
@@ -137,11 +174,11 @@ class _IncriptionState extends State<Incription> {
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
-                      icon: Icon(
-                        Icons.person,
-                        color: Colors.black,
-                      ),
-                      hintText: "Prénom",
+                      // icon: Icon(
+                      //   Icons.person,
+                      //   color: Colors.black,
+                      // ),
+                      hintText: "Prénom *",
                       border: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       hintStyle: TextStyle(color: Colors.black)),
@@ -163,11 +200,11 @@ class _IncriptionState extends State<Incription> {
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
-                      icon: Icon(
-                        Icons.person,
-                        color: Colors.black,
-                      ),
-                      hintText: "Nom",
+                      // icon: Icon(
+                      //   Icons.person,
+                      //   color: Colors.black,
+                      // ),
+                      hintText: "Nom *",
                       border: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       hintStyle: TextStyle(color: Colors.black)),
@@ -189,11 +226,11 @@ class _IncriptionState extends State<Incription> {
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
-                      icon: Icon(
-                        Icons.phone_android,
-                        color: Colors.black,
-                      ),
-                      hintText: "Numéro de téléphone",
+                      // icon: Icon(
+                      //   Icons.phone_android,
+                      //   color: Colors.black,
+                      // ),
+                      hintText: "Numéro de téléphone *",
                       border: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       hintStyle: TextStyle(color: Colors.black)),
@@ -216,11 +253,11 @@ class _IncriptionState extends State<Incription> {
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
-                      icon: Icon(
-                        Icons.mail,
-                        color: Colors.black,
-                      ),
-                      hintText: "Email",
+                      // icon: Icon(
+                      //   Icons.mail,
+                      //   color: Colors.black,
+                      // ),
+                      hintText: "Email *",
                       border: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       hintStyle: TextStyle(color: Colors.black)),
@@ -242,11 +279,11 @@ class _IncriptionState extends State<Incription> {
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
-                      icon: Icon(
-                        Icons.lock,
-                        color: Colors.black,
-                      ),
-                      hintText: "Mot de passe",
+                      // icon: Icon(
+                      //   Icons.lock,
+                      //   color: Colors.black,
+                      // ),
+                      hintText: "Mot de passe *",
                       border: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       hintStyle: TextStyle(color: Colors.black)),
@@ -309,7 +346,7 @@ class _IncriptionState extends State<Incription> {
                         _submit();
                       }
                     },
-                    child: const Text('Connecter'),
+                    child: const Text('Inscricre'),
                   ),
                 ),
               ),

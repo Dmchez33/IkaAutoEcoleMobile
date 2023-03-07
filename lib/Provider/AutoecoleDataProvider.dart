@@ -24,5 +24,11 @@ class AutoecoleDataProvider with ChangeNotifier {
 
   List<contenuCours> contenu = [];
 
+  contenuCours? contenuById ;
+
+  List<AutoEcole> autoecole = [];
+
+  AutoEcole? autoecolebyid;
+
   
 }

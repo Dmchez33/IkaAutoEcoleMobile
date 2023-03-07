@@ -29,22 +29,22 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
 
   //COurs contenu
   CoursService coursService = CoursService();
-  List<contenuCours>? contenu;
+  contenuCours? contenu;
 
   getAllCours() async {
     print(widget.idContenu);
-    contenu = await coursService.getAllContenu(widget.idContenu);
+    contenu = await coursService.getAllContenuById(widget.idContenu);
     Provider
         .of<AutoecoleDataProvider>(context, listen: false)
-        .contenu = contenu!;
+        .contenuById = contenu!;
     setState(() {
-
+      loadAudioPlayer('assets/audio/cours/${contenu!.vocal}');
     });
   }
   @override
   void initState() {
-    loadVideoPlayer();
-    loadAudioPlayer();
+    /*loadVideoPlayer();
+    loadAudioPlayer();*/
     super.initState();
     getAllCours();
     playAudioWelCome = false;
@@ -53,20 +53,10 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
 
 
 
-  loadVideoPlayer() {
-    controller = VideoPlayerController.asset(
-        'assets/audio/panneaux.mp4');
-    controller.addListener(() {
-      setState(() {});
-    });
-    controller.initialize().then((value) {
-      setState(() {});
-    });
-  }
 
-  loadAudioPlayer() {
+  loadAudioPlayer(String lien) {
     controlleraudio = VideoPlayerController.asset(
-        'assets/audio/vocal1.mp3');
+        lien);
     controlleraudio.addListener(() {
       setState(() {});
     });
@@ -141,87 +131,22 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
                     children: [
                       //DEBUT DE PLACE DE LA VIDEO
                       Container(
-                        margin: EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            //ECRAN OU ON PEUT VISUALISER LA VIDEO
-                            /*AspectRatio(
-                            aspectRatio: controller.value.aspectRatio,
-                            child: VideoPlayer(controller),
-                          ),*/
+                        margin: EdgeInsets.all(10),
+                        child: InteractiveViewer(
+                          child:  Image.network(
+                            "${contenu!.description}",
+                            fit: BoxFit.fitWidth,
 
-                            //INDICATEUR DE LA progression de la video
-                            /*Container(
-                              child: VideoProgressIndicator(controller,
-                                  allowScrubbing: false,
-                                  colors: const VideoProgressColors())),*/
-                            //CONTENEUR CONTENANT LE BUTTON PLAY PAUSE  DE LA VIDEO
-                            /*Container(
-                            child: Row(
-                              children: [
-                                IconButton(
-                                    onPressed: () {
-                                      if (controller.value.isPlaying) {
-                                        controller.pause();
-                                      } else {
-                                        controller.play();
-                                      }
+                          ),
 
-                                      setState(() {});
-                                    },
-                                    icon: Icon(controller.value.isPlaying
-                                        ? Icons.pause
-                                        : Icons.play_arrow)),
-                                IconButton(
-                                    onPressed: () {
-                                      controller.seekTo(Duration(seconds: 0));
-
-                                      setState(() {});
-                                    },
-                                    icon: Icon(Icons.stop))
-                              ],
-                            ),
-                          ),*/
-                          ],
+                          boundaryMargin: EdgeInsets.all(20.0),
+                          minScale: 0.1,
+                          maxScale: 5.0,
+                          panEnabled: false,
+                          scaleEnabled: false,
                         ),
                       ),
 
-                      //FIN DE LA PLACE DE LA VIDEO
-
-                      //DEBUT DE LA PLACE DE L'IMAGE
-                      Column(
-                        //crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          for(int i=0; i<contenu!.length; i++)...[
-                            Container(
-                              margin: const EdgeInsets.only(right: 20,left: 20),
-                              child: Image.asset(
-                                "${contenu![i].image}",
-                                height: MediaQuery.of(context).size.width * .5,
-                                fit: BoxFit.fill,
-                                //height: MediaQuery.of(context).size.height,
-                              ),
-                            ),
-                            Container(
-                                margin: EdgeInsets.all(20),
-                                child:  Text(
-                                  "${contenu![i].titre}",
-                                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.justify,
-                                )),
-                            Container(
-                                margin: EdgeInsets.all(20),
-                                child: Text(
-                                  "${contenu![i].description}",
-                                  style: TextStyle(fontSize: 18),
-                                  textAlign: TextAlign.justify,
-                                )),
-                          ]
-
-
-
-                        ],
-                      )
                     ],
                   ),
                 ),
@@ -232,7 +157,8 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
+          onPressed: () async{
+            //loadAudioPlayer('assets/audio/cours/${contenu!.vocal}');
             if (controlleraudio.value.isPlaying) {
               controlleraudio.pause();
             } else {

@@ -7,26 +7,24 @@ class AdminAutoEcole {
   String? password;
   bool? status;
   List<Roles>? roles;
-  String? datenaissance;
-  String? lieuxnaissance;
-  Null? image;
-  String? nomautoecole;
-  Null? telephone;
-  Null? etat;
+  String? image;
+  String? nom;
+  String? prenom;
+  String? telephone;
+  bool? etat;
 
   AdminAutoEcole(
       {this.id,
-        this.username,
-        this.email,
-        this.password,
-        this.status,
-        this.roles,
-        this.datenaissance,
-        this.lieuxnaissance,
-        this.image,
-        this.nomautoecole,
-        this.telephone,
-        this.etat});
+      this.username,
+      this.email,
+      this.password,
+      this.status,
+      this.roles,
+      this.image,
+      this.nom,
+      this.prenom,
+      this.telephone,
+      this.etat});
 
   AdminAutoEcole.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -40,10 +38,9 @@ class AdminAutoEcole {
         roles!.add(new Roles.fromJson(v));
       });
     }
-    datenaissance = json['datenaissance'];
-    lieuxnaissance = json['lieuxnaissance'];
     image = json['image'];
-    nomautoecole = json['nomautoecole'];
+    nom = json['nom'];
+    prenom = json['prenom'];
     telephone = json['telephone'];
     etat = json['etat'];
   }
@@ -58,12 +55,30 @@ class AdminAutoEcole {
     if (this.roles != null) {
       data['roles'] = this.roles!.map((v) => v.toJson()).toList();
     }
-    data['datenaissance'] = this.datenaissance;
-    data['lieuxnaissance'] = this.lieuxnaissance;
     data['image'] = this.image;
-    data['nomautoecole'] = this.nomautoecole;
+    data['nom'] = this.nom;
+    data['prenom'] = this.prenom;
     data['telephone'] = this.telephone;
     data['etat'] = this.etat;
+    return data;
+  }
+}
+
+class Roles {
+  int? id;
+  String? name;
+
+  Roles({this.id, this.name});
+
+  Roles.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
     return data;
   }
 }

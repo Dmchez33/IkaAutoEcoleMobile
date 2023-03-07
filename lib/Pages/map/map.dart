@@ -1,4 +1,4 @@
-import 'package:audioplayer/audioplayer.dart';
+
 import 'package:circular_image/circular_image.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,6 +37,8 @@ class _localisationState extends State<localisation> {
   List<Adresses>? adresse;
   Adresses? adres;
 
+  List<AutoEcole>? listAutoEcoleByAdresse;
+
 
   List<String> _regions = [
     'Badalabougou',
@@ -65,10 +67,17 @@ class _localisationState extends State<localisation> {
 
   // FIN POUR L'AUDIO
 
-  AudioPlayer _audioPlayer = AudioPlayer();
+  //Methode permettant d'obtenir les toutes les adresses
   getAdresse() async{
     adresse = await adresses.getAllAdresses();
     Provider.of<AutoecoleDataProvider>(context, listen: false).adresses = adresse!;
+    setState(() {});
+  }
+
+  //Methode permettant d'obtenir une autoecole par adresse
+  getAutoEcoleByAdresse(String quartier) async{
+    listAutoEcoleByAdresse = await adresses.getAutoEcoleByAdresse(quartier);
+    Provider.of<AutoecoleDataProvider>(context, listen: false).autoecole = listAutoEcoleByAdresse!;
     setState(() {});
   }
 
@@ -77,6 +86,7 @@ class _localisationState extends State<localisation> {
     super.initState();
     checkLoginStatus();
     getAdresse();
+    //getAutoEcoleByAdresse();
     showWidget = true;
     print("bonjour");
 
@@ -184,8 +194,9 @@ class _localisationState extends State<localisation> {
                             dropdownDecoratorProps: const DropDownDecoratorProps(
                               dropdownSearchDecoration: InputDecoration(
                                 icon: Icon( Icons.fmd_good_outlined),
+                                
                                 //labelText: "Selectionner un quartier",
-                                //hintText: "Select an Int",
+                                hintText: "Selectionner un quartier",
                               ),
                             ),
                             //label: "Sélectionnez une adresse",
@@ -194,7 +205,7 @@ class _localisationState extends State<localisation> {
                             itemAsString: (Adresses adresse) => adresse.quartier!,
                             onChanged: (value) {
                               setState(() {
-                                print(value);
+                                print("voici adresse selectionner: ${value!.quartier}");
                                 adres = value!;
                               });
                             },
@@ -259,6 +270,7 @@ class _localisationState extends State<localisation> {
                       child: const Text('Rechercher'),
                       onPressed: () {
                         // handle search here
+                        getAutoEcoleByAdresse('${adres!.quartier}');
                         setState(() {
                           showWidget = false;
                         });
@@ -358,7 +370,56 @@ class _localisationState extends State<localisation> {
                         ],
                       ),
                     ] else ...[
-                      Container(
+                      if(listAutoEcoleByAdresse == null) ...[
+                        
+                            Container(
+                              margin: EdgeInsets.only(top: 100),
+                              child: const Center(
+                              child: Text("Pas d'autoEcole dans cette adresse"),
+                          ),
+                            ),
+                          
+                      ] else ...[
+                        for(int i=0; i<listAutoEcoleByAdresse!.length; i++)...[
+                          Container(
+                            child: Column(
+                              children: [
+                                Card(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                           DetailLieuxMap( id: listAutoEcoleByAdresse![i].id,),
+                                        ),
+                                      );
+                                    },
+                                    child: ListTile(
+                                      leading: CircularImage(
+                                          radius: 20,
+                                          borderWidth: 1,
+                                          borderColor: Colors.white,
+                                          source: 'assets/images/kanaga.jpg'),
+                                      title:  Text(
+                                        "Auto-école ${listAutoEcoleByAdresse![i].nom}",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.justify,
+                                      ),
+                                      subtitle: const Text('20 23 01 02 / 66 73 01 99'),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ]
+                      ]
+                      /*Container(
                           child: Column(
                         children: [
                           Card(
@@ -416,7 +477,7 @@ class _localisationState extends State<localisation> {
                             ),
                           )
                         ],
-                      ))
+                      ))*/
                     ],
                   ],
                 ),
