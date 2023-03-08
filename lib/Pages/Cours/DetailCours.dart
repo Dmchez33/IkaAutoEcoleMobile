@@ -30,6 +30,15 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
   //COurs contenu
   CoursService coursService = CoursService();
   contenuCours? contenu;
+/*  loadAudioPlayer() {
+    controlleraudio = VideoPlayerController.asset('assets/audio/Arrêtstationnementdefinition.mp3');
+    controlleraudio.addListener(() {
+      setState(() {});
+    });
+    controlleraudio.initialize().then((value) {
+      setState(() {});
+    });
+  }*/
 
   getAllCours() async {
     print(widget.idContenu);
@@ -38,7 +47,7 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
         .of<AutoecoleDataProvider>(context, listen: false)
         .contenuById = contenu!;
     setState(() {
-      loadAudioPlayer('assets/audio/cours/${contenu!.vocal}');
+      //loadAudioPlayer('assets/audio/Arrêtstationnementdefinition.mp3');
     });
   }
   @override
@@ -46,9 +55,11 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
     /*loadVideoPlayer();
     loadAudioPlayer();*/
     super.initState();
+    //loadAudioPlayer();
+    //loadAudioPlayer('assets/audio/mentdefinition.mp3');
     getAllCours();
     playAudioWelCome = false;
-
+    loadAudioPlayer('assets/audio/mentdefinition.mp3');
   }
 
 
@@ -157,14 +168,23 @@ class _DetailCoursPageState extends State<DetailCoursPage> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Color(0xFF1A237E),
           onPressed: () async{
             //loadAudioPlayer('assets/audio/cours/${contenu!.vocal}');
+            /*if (controlleraudio.value.isPlaying) {
+              controlleraudio.pause();
+            } else {
+              controlleraudio.play();
+            }*/
             if (controlleraudio.value.isPlaying) {
               controlleraudio.pause();
             } else {
               controlleraudio.play();
             }
-            setState(() {});
+            setState(() {
+
+
+            });
 
           },
           child: Icon(controlleraudio.value.isPlaying

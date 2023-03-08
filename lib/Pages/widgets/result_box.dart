@@ -22,7 +22,7 @@ class ResultBox extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Result',
+              'Resultat',
               style: TextStyle(color: neutral, fontSize: 22.0),
             ),
             const SizedBox(height: 20.0),
@@ -39,19 +39,19 @@ class ResultBox extends StatelessWidget {
                       : correct, // when the result is more than half
             ),
             const SizedBox(height: 20.0),
-            Text(
+            /*Text(
               result == questionLength / 2
                   ? 'Almost There' // when the result is half of the questions
                   : result < questionLength / 2
                       ? 'Try Again ?' // when the result is less than half
                       : 'Great!', // when the result is more than half
               style: const TextStyle(color: neutral),
-            ),
+            ),*/
             const SizedBox(height: 25.0),
             GestureDetector(
               onTap: onPressed,
               child: const Text(
-                'Start Over',
+                'Recommencer',
                 style: TextStyle(
                   color: Colors.blue,
                   fontSize: 20.0,

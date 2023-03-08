@@ -58,14 +58,14 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
         }, title: 'Que signifie ce panneau ?'),
     Question(id: 5,
         question: "Que veut dire ce panneau?",
-        image: "assets/images/imageMap/question5.png",
+        image: "assets/images/imageMap/question6.png",
         options: {
           'Aller tout droit': false,
           'Priorité à droite à la prochaine intersection': true,
           'Arrêt à la prochaine intersection': false,
           'Priorité ponctuelle': false,
         }, title: "Que veut dire ce panneau?"),
-    Question(id: 6,
+    /*Question(id: 6,
         question: "Que peut on rencontrer à l'approche de ce panneau?",
         image: "assets/images/imageMap/question6.png",
         options: {
@@ -91,7 +91,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
           '50m': true,
           '150m': false,
           '500m': false,
-        }, title: "En ville, un panneau de danger est indiqué à quelle distance du lieu ?")
+        }, title: "En ville, un panneau de danger est indiqué à quelle distance du lieu ?")*/
   ];
 
   int index = 0;
@@ -199,7 +199,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
                 style: TextStyle(color: Colors.white),
               ),
               Text('Q. ${(index+1).toString().padLeft(2,'0')}', style:TextStyle( color: Colors.white)),
-              GestureDetector(
+              /*GestureDetector(
                 onTap: () {
                   showDialog(context: context, builder: (ctx) => ResultBox(
                     result: score,
@@ -211,7 +211,7 @@ class _QuetionsScreenState extends State<QuestionsScreen> {
                 child: const Icon(
                   Icons.menu_rounded,
                 ),
-              )
+              )*/
             ],
           ),
           backgroundColor: background,

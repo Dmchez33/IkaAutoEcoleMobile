@@ -55,32 +55,10 @@ class _MainPageState extends State<MainPage> {
             correctAnswer: "Paris",
           ),
         ],
-        "Quiz 2": [
-          Question(
-            questionText: "Qui est Alassane Dramane Ouatara la Côte d'ivoire?",
-            options: [
-              "Président",
-              "Premier Ministre",
-              "Ancien Debuté",
-              "Joueur"
-            ],
-            correctAnswer: "Président",
-          ),
-          Question(
-            questionText: "Qui est Assimi Goita du Mali?",
-            options: ["Président", "Militaire", "Ancien Debuté", "Joueur"],
-            correctAnswer: "Militaire",
-          ),
-          Question(
-            questionText: "Qui est Modibo Keita du Mali?",
-            options: ["Président", "Politicien", "Ancien President", "Joueur"],
-            correctAnswer: "Ancien President",
-          ),
-        ]
       },
     ),
 
-    YoutubePlayerDemoApp(),
+    //YoutubePlayerDemoApp(),
   ];
 
   void _onItemTapped(int index) {
@@ -142,11 +120,11 @@ class _MainPageState extends State<MainPage> {
                 label: 'Quiz',
                 backgroundColor: Color(0xFF1A237E),
               ),
-              BottomNavigationBarItem(
+              /*BottomNavigationBarItem(
                 icon: Icon(Icons.video_library),
                 label: 'Vidéos',
                 backgroundColor: Color(0xFF1A237E),
-              ),
+              ),*/
             ],
             currentIndex: _selectedIndex,
             showSelectedLabels: true,
